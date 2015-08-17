@@ -36,7 +36,7 @@ public class Daemon {
 		EnviarNotificaciones notificaciones = new EnviarNotificaciones (configuracion.getProgramaNotificaciones());
 
 
-		log.info("Arrancando Wisteria Daemon");
+		log.info("Arrancando Wisteria Daemon DQ");
 
 
 		
