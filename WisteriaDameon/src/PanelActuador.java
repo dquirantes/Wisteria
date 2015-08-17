@@ -24,7 +24,7 @@ public class PanelActuador extends TimerTask {
 	@Override
 	public void run() 
 	{
-		log.info ("Entrada de datos");
+		//log.info ("Entrada de datos");
 
 		String res;		
 

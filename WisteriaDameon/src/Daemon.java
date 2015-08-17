@@ -7,7 +7,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import sistema.BaseDatos;
 import sistema.Configuracion;
-//import sistema.EnviarCorreo;
+import sistema.EnviarCorreo;
 import sistema.EnviarNotificaciones;
 
 
@@ -36,7 +36,7 @@ public class Daemon {
 		EnviarNotificaciones notificaciones = new EnviarNotificaciones (configuracion.getProgramaNotificaciones());
 
 
-		log.info("Arrancando Wisteria Daemon DQ");
+		log.info("Arrancando Wisteria Daemon");
 
 
 		
@@ -82,10 +82,13 @@ public class Daemon {
 		File FLAG_FILE = new File(configuracion.getFicheroTemporal());
 
 
+		EnviarCorreo correo = new EnviarCorreo(configuracion.getCorrreoFrom(), configuracion.getCorrreoUsuario(), configuracion.getCorrreoPassword(), configuracion.getCorrreoHost(),configuracion.getCorrreoPuerto());
+		
+		
+		if (configuracion.getEnviarCorreo())
+			correo.enviarCorreo(configuracion.getCorrreoTo(),configuracion.getCorrreoAsunto(),"Arrancando el sistema de calefacción " + sistema);
 
-		/*EnviarCorreo correo = new EnviarCorreo(configuracion.getCorrreoFrom(), configuracion.getCorrreoUsuario(), configuracion.getCorrreoPassword(), configuracion.getCorrreoHost());
-		correo.enviarCorreo("dquirantes@gmail.com","Wisteria Climatizacion","Arrancando el sistema de calefacción " + sistema);*/
-
+		
 		notificaciones.enviar("Arrancando Sistema");
 
 
@@ -113,6 +116,7 @@ public class Daemon {
 			if (estado_old!=estado_nuevo)
 			{
 
+
 				if (estado_nuevo == EstadoRele.ABIERTO)			
 				{
 					log.debug ("Encender caldera");
@@ -130,6 +134,10 @@ public class Daemon {
 						notificaciones.enviar("Apagar la caldera. Climatizador: " + sistema.getTemperatura());
 					basedatos.cerrar((sistema.getTemperatura()));
 				}
+				
+
+				// Si hay cambio de estado actualizar en BBDD
+				registro.run();
 
 			}
 

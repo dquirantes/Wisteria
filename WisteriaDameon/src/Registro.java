@@ -25,8 +25,12 @@ public class Registro extends TimerTask {
 		log.debug ("Registrar informacion en la BBDD");
 		
 		Boolean res = 
-		basedatos.insertarSistema(sistema.getTemperatura(),sistema.getHumedad(),sistema.getTempExterna(),sistema.getEstadoRele().toString(),
-				sistema.getTemperatura_Climatizador(),sistema.getTemperatura_dormitorio(),sistema.getHumedad_dormitorio());
+		basedatos.insertarSistema(sistema.getTemperatura(),sistema.getHumedad(),
+				sistema.getTempExterna(),sistema.getEstadoRele().toString(),
+				sistema.getTemperatura_Climatizador(),sistema.getTemperatura_dormitorio(),sistema.getHumedad_dormitorio(),
+				sistema.getTemperatura_habitacion1(),sistema.getTemperatura_habitacion1(),
+				sistema.getTemperatura_habitacion2(),sistema.getTemperatura_habitacion2(),
+				sistema.getTemperatura_raspi());
 		
 		if (!res)
 		{

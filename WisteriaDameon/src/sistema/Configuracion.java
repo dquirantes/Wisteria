@@ -27,10 +27,14 @@ public class Configuracion {
 	private String bd_usuario;
 	private String bd_password;
 
+	private boolean enviarCorreo;
 	private String correo_from;
+	private String correo_to;	
 	private String correo_usuario;
 	private String correo_password;
 	private String correo_host;
+	private String correo_puerto;
+	private String correo_asunto;
 	
 
 	private int gpio_salon;
@@ -47,6 +51,7 @@ public class Configuracion {
 	private long tRegistro;
 
 	private float tmp_Margen;
+	
 	
 	
 	
@@ -76,11 +81,16 @@ public class Configuracion {
 			bd_usuario = prop.getProperty("bd_usuario");
 			bd_password = prop.getProperty("bd_password");
 
+			enviarCorreo = Boolean.parseBoolean(prop.getProperty("enviar_correo"));			
 			correo_from = prop.getProperty("correo_from");
+			correo_to = prop.getProperty("correo_to");
 			correo_usuario = prop.getProperty("correo_usuario");
 			correo_password = prop.getProperty("correo_password");
-			correo_host = prop.getProperty("correo_host");
-
+			correo_host = prop.getProperty("correo_host");			
+			correo_puerto = prop.getProperty("correo_puerto");			
+			correo_asunto = prop.getProperty("correo_asunto");			
+			
+			
 			gpio_salon = Integer.parseInt(prop.getProperty("gpio_salon"));
 			gpio_dormitorio = Integer.parseInt(prop.getProperty("gpio_dormitorio"));
 			gpio_habitacion1 = Integer.parseInt(prop.getProperty("gpio_habitacion1"));
@@ -101,7 +111,7 @@ public class Configuracion {
 			
 		}catch (Exception e)
 		{
-			log.error ("Fallo en la configuración.");
+			log.error ("Fallo en la configuración. Revise el fichero: " + pathProperties);
 			e.printStackTrace();
 			System.exit (-1);
 		}
@@ -109,6 +119,11 @@ public class Configuracion {
 
 	}
 
+	public boolean getEnviarCorreo()
+	{
+		return enviarCorreo;
+	}
+	
 	public Float gettmp_Margen()
 	{
 		return tmp_Margen;
@@ -168,6 +183,17 @@ public class Configuracion {
 	{
 		return this.programa_notificaciones;
 	}
+	
+	public String getCorrreoAsunto()
+	{
+		return correo_asunto;
+	}
+	
+	public String getCorrreoTo()
+	{
+		return correo_to;
+	}
+	
 	public String getCorrreoFrom()
 	{
 		return correo_from;
@@ -179,6 +205,11 @@ public class Configuracion {
 	{
 		return correo_usuario;
 	}
+	
+	public String getCorrreoPuerto()
+	{
+		return correo_puerto;
+	}	
 	
 	public String getCorrreoPassword()
 	{

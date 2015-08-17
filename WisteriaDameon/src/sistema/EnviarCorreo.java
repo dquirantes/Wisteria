@@ -20,18 +20,20 @@ public class EnviarCorreo {
 	private String username;
 	private String password;
 	private String host;
+	private String puerto;
 
-	public EnviarCorreo(String from, String username, String password, String host)
+	public EnviarCorreo(String from, String username, String password, String host, String puerto)
 	{
 		this.from = from;
 		this.username = username;
 		this.password = password;
 		this.host = host ;
+		this.puerto = puerto;
 	}
 
 	public boolean enviarCorreo (String para, String asunto, String texto) 
 	{
-		log.debug ("Enviar correo " + para + " " + asunto);
+		log.debug ("Enviar correo " + para + " " + asunto + " por el puerto " + puerto);
 		// Recipient's email ID needs to be mentioned.
 
 
@@ -46,8 +48,8 @@ public class EnviarCorreo {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.host", host);
-		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.ssl.trust", host);
+		props.put("mail.smtp.port", puerto);
 
 		// Get the Session object.
 		Session session = Session.getInstance(props,
@@ -77,7 +79,7 @@ public class EnviarCorreo {
 			// Send message
 			Transport.send(message);
 
-			log.debug("Sent message successfully....");
+			log.debug("Mensaje enviado correctamente");
 
 		} catch (MessagingException e) {
 			log.error("Fallo envio corro electronico");
