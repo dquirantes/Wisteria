@@ -49,7 +49,8 @@ public class Configuracion {
 	private long tExterno;
 	private long tBucle;
 	private long tRegistro;
-
+	private long tNotificaciones;
+	
 	private float tmp_Margen;
 	
 	
@@ -105,6 +106,7 @@ public class Configuracion {
 			tExterno= Long.parseLong(prop.getProperty("tExterno"));
 			tBucle= Long.parseLong(prop.getProperty("tBucle"));
 			tRegistro= Long.parseLong(prop.getProperty("tRegistro"));
+			tNotificaciones= Long.parseLong(prop.getProperty("tNotificaciones"));
 			
 			
 			
@@ -146,6 +148,11 @@ public class Configuracion {
 	public long gettBucle()
 	{
 		return tBucle;
+	}
+	
+	public long gettNotificaciones()
+	{
+		return tNotificaciones;
 	}
 	
 	public long gettRegistro()

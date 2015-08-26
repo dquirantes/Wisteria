@@ -28,7 +28,8 @@ public class Daemon {
 		String ruta_log4j = path_aplicacion + "/cfg/log4j.properties";
 		
 
-
+		long ms_inicio = System.currentTimeMillis();
+		
 		PropertyConfigurator.configure(ruta_log4j);
 
 
@@ -74,9 +75,11 @@ public class Daemon {
 
 		Registro registro = new Registro (sistema, basedatos);  
 		Timer timer_registro = new Timer(true);       
-		timer_registro .scheduleAtFixedRate(registro, configuracion.gettRegistro()*1000, configuracion.gettRegistro()* 1000);
+		timer_registro.scheduleAtFixedRate(registro, configuracion.gettRegistro()*1000, configuracion.gettRegistro()* 1000);
 
+ 
 
+		
 
 
 		File FLAG_FILE = new File(configuracion.getFicheroTemporal());
@@ -84,12 +87,17 @@ public class Daemon {
 
 		EnviarCorreo correo = new EnviarCorreo(configuracion.getCorrreoFrom(), configuracion.getCorrreoUsuario(), configuracion.getCorrreoPassword(), configuracion.getCorrreoHost(),configuracion.getCorrreoPuerto());
 		
+
+		NotificacionesInformacion notificaciones_info = new NotificacionesInformacion (notificaciones,sistema);
+		Timer timer_notificaciones = new Timer(true);
+		timer_notificaciones.scheduleAtFixedRate(notificaciones_info, 30000, configuracion.gettNotificaciones()* 1000);
+		
 		
 		if (configuracion.getEnviarCorreo())
-			correo.enviarCorreo(configuracion.getCorrreoTo(),configuracion.getCorrreoAsunto(),"Arrancando el sistema de calefacción " + sistema);
+			correo.enviarCorreo(configuracion.getCorrreoTo(),configuracion.getCorrreoAsunto(),"Arrancando Sistema Domotico");
 
 		
-		notificaciones.enviar("Arrancando Sistema");
+		notificaciones.enviar("Arrancando Sistema Domotico");
 
 
 		try {
@@ -102,7 +110,7 @@ public class Daemon {
 
 		while (FLAG_FILE.exists() && sistema.getErrorSistema()==null)
 		{
-			// Imprime el estado del sistema
+			// Imprime el estado del sistema en cada bucle
 			log.info(sistema);
 			
 			
@@ -160,9 +168,13 @@ public class Daemon {
 			log.info("Apagar caldera antes de salir");
 			rele.cerrar();
 			basedatos.cerrar((sistema.getTemperatura()));
-
 		}
 
+
+		long ms_fin = System.currentTimeMillis();
+		
+		log.info ("Tiempo ejecucion: " + (ms_fin-ms_inicio)/1000 + " sg");
+		notificaciones.enviar("Parada sistema domótico");
 		log.info("Sale de la aplicacion");
 
 	}
