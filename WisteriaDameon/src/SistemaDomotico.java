@@ -260,5 +260,20 @@ public class SistemaDomotico {
 
 	}
 
+	public String toString_info ()
+	{
+		String res = "Salón: " + temp + "º - " ;
+		res += "Dormitorio: " + temp_dormitorio+ "º - " ;
+//		res += "Habitacion1: " + temp_habitacion1+ "º - " ;
+//		res += "Habitacion2: " + temp_habitacion2+ "º -  " ;
+		res += "Temp Externa: " + temp_ext + "º -  " ;
+		res += "Raspberry: " + temp_raspi + "º -  " ;
+		
+		res += "Modo: " + modo + " (" + opciones_modo+ ") "+ temp_climatizador + "º -  " ;
+		res += "Rele: " + rele;
+
+		return res;
+
+	}
 
 }

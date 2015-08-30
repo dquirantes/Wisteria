@@ -20,7 +20,7 @@ public class NotificacionesInformacion  extends TimerTask {
 
 	public void run() {
 		log.debug("Enviar notificaciones!");
-		notificaciones.enviar(sistema.toString());
+		notificaciones.enviar(sistema.toString_info());
 		
 	}
 
