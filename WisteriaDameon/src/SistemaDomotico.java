@@ -250,7 +250,7 @@ public class SistemaDomotico {
 		res += "Dormitorio: " + temp_dormitorio+ "º " + humedad_dormitorio + "% HR -  " ;
 		res += "Habitacion1: " + temp_habitacion1+ "º " + humedad_habitacion1 + "% HR -  " ;
 		res += "Habitacion2: " + temp_habitacion2+ "º " + humedad_habitacion2+ "% HR -  " ;
-		res += "Temp Externa: " + temp_ext + "º -  " ;
+		res += "Externa: " + temp_ext + "º -  " ;
 		res += "Raspberry: " + temp_raspi + "º -  " ;
 		
 		res += "Modo: " + modo + " (" + opciones_modo+ ") "+ temp_climatizador + "º -  " ;
