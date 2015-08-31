@@ -132,14 +132,14 @@ public class Daemon {
 					basedatos.abrir(sistema.getTemperatura());
 					
 					if (sistema.getEnviarNotificaciones())
-						notificaciones.enviar("Encender la caldera. Climatizador: " + sistema.getTemperatura_Climatizador());
+						notificaciones.enviar("Encender la caldera");
 				}
 				else if (estado_nuevo == EstadoRele.CERRADO)					
 				{
 					rele.cerrar();
 					log.debug ("Apagar caldera");
 					if (sistema.getEnviarNotificaciones())
-						notificaciones.enviar("Apagar la caldera. Climatizador: " + sistema.getTemperatura());
+						notificaciones.enviar("Apagar la caldera");
 					basedatos.cerrar((sistema.getTemperatura()));
 				}
 				
@@ -147,6 +147,8 @@ public class Daemon {
 				// Si hay cambio de estado actualizar en BBDD
 				registro.run();
 
+				// Si hay cambio notificar estado
+				notificaciones_info.run();
 			}
 
 			try {
