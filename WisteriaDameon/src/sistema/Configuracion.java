@@ -37,10 +37,10 @@ public class Configuracion {
 	private String correo_asunto;
 	
 
-	private int gpio_salon;
-	private int gpio_dormitorio;
-	private int gpio_habitacion1;
-	private int gpio_habitacion2;
+	private String gpio_salon;
+	private String gpio_dormitorio;
+	private String gpio_habitacion1;
+	private String gpio_habitacion2;
 	
 	private float tempMaximaPlaca;
 	
@@ -92,10 +92,10 @@ public class Configuracion {
 			correo_asunto = prop.getProperty("correo_asunto");			
 			
 			
-			gpio_salon = Integer.parseInt(prop.getProperty("gpio_salon"));
-			gpio_dormitorio = Integer.parseInt(prop.getProperty("gpio_dormitorio"));
-			gpio_habitacion1 = Integer.parseInt(prop.getProperty("gpio_habitacion1"));
-			gpio_habitacion2 = Integer.parseInt(prop.getProperty("gpio_habitacion2"));
+			gpio_salon = prop.getProperty("gpio_salon");
+			gpio_dormitorio = prop.getProperty("gpio_dormitorio");
+			gpio_habitacion1 = prop.getProperty("gpio_habitacion1");
+			gpio_habitacion2 = prop.getProperty("gpio_habitacion2");
 			
 			tempMaximaPlaca = Float.parseFloat(prop.getProperty("tempMaximaPlaca"));
 			tmp_Margen = Float.parseFloat(prop.getProperty("tmp_Margen"));
@@ -164,23 +164,23 @@ public class Configuracion {
 	{
 		return tempMaximaPlaca;
 	}
-	public int get_Gpio_Salon()
+	public String get_Gpio_Salon()
 	{
 		return gpio_salon;
 	}
 	
-	public int get_Gpio_Dormitorio()
+	public String get_Gpio_Dormitorio()
 	{
 		return gpio_dormitorio;
 	}
 	
-	public int get_Gpio_habitacion1()
+	public String get_Gpio_habitacion1()
 	{
 		return gpio_habitacion1;
 	}
 	
 
-	public int get_Gpio_habitacion2()
+	public String get_Gpio_habitacion2()
 	{
 		return gpio_habitacion2;
 	}

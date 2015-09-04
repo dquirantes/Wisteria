@@ -1,9 +1,14 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
 
 import sistema.Configuracion;
 import sistema.ProgramaExterno;
+
 
 
 public class SensorTempertura extends TimerTask{
@@ -20,10 +25,10 @@ public class SensorTempertura extends TimerTask{
 
 	private int errores1 = 0;
 	private int errores2 = 0;
-	//private int errores3 = 0;
-	//private int errores4 = 0;
+	private int errores3 = 0;
+	private int errores4 = 0;
 	private int errores5 = 0;
-	
+
 
 	public SensorTempertura (SistemaDomotico sis,String programa, Configuracion config)
 	{		
@@ -50,9 +55,11 @@ public class SensorTempertura extends TimerTask{
 		float temp_habitacion1;
 		float humedad_habitacion2;
 		float temp_habitacion2;				
-		
+
 		float temp_placa;
 		String partes[];
+		String linea;
+
 
 
 		try
@@ -100,60 +107,94 @@ public class SensorTempertura extends TimerTask{
 
 		try
 		{
-			res= programa_externo.ejecutar(programa + " " + config.get_Gpio_habitacion1());
-			partes = res.split(",");
-			humedad_habitacion1 = Float.parseFloat(partes[0]);							
-			temp_habitacion1 = Float.parseFloat(partes[1]);
 
-			sistema.setTemp_habitacion1(temp_habitacion1);
-			sistema.setHumedad_habitacion1(humedad_habitacion1);
+			log.debug ("Conectado ESP8266 habitacion1");
+			URL url = new URL(config.get_Gpio_habitacion1());
+			URLConnection con = (URLConnection) url.openConnection();
 
-			//errores3=0;
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(con.getInputStream()));
 
+
+			if ((linea = in.readLine()) != null) 
+			{
+				log.debug ("Recibido: " + linea);
+				partes = linea.split(",");
+
+				humedad_habitacion1 = Float.parseFloat(partes[1]);
+				temp_habitacion1 = Float.parseFloat(partes[2]);
+
+				sistema.setTemp_habitacion1(temp_habitacion1);
+				sistema.setHumedad_habitacion1(humedad_habitacion1);
+
+				errores3=0;
+
+			}
 		}catch (Exception e)
 		{
-			//errores3++;
+			e.printStackTrace();
+			errores3++;
 
 
-			log.error("Fallo sensor habitación1");
+			log.error("Fallo sensor habitación1 ESP8266");
 
-			//if (errores3>ERRORES_MAXIMOS)
-			//sistema.setErrorSistema(ErroresSistema.SENSORES);
+			if (errores3>ERRORES_MAXIMOS)
+				sistema.setErrorSistema(ErroresSistema.SENSORES);
 		}
+
 
 
 		try
 		{
-			res= programa_externo.ejecutar(programa + " " + config.get_Gpio_habitacion2());
-			partes = res.split(",");
-			humedad_habitacion2 = Float.parseFloat(partes[0]);							
-			temp_habitacion2 = Float.parseFloat(partes[1]);
-			sistema.setTemp_habitacion2(temp_habitacion2);
-			sistema.setHumedad_habitacion2(humedad_habitacion2);
 
-			//errores4=0;
+			log.debug ("Conectado ESP8266 habitacion2");
+			URL url = new URL(config.get_Gpio_habitacion2());
+			URLConnection con = (URLConnection) url.openConnection();
+
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(con.getInputStream()));
+
+
+			if ((linea = in.readLine()) != null) 
+			{
+				log.debug ("Recibido: " + linea);
+				partes = linea.split(",");
+
+				humedad_habitacion2 = Float.parseFloat(partes[1]);
+				temp_habitacion2 = Float.parseFloat(partes[2]);
+
+				sistema.setTemp_habitacion2(temp_habitacion2);
+				sistema.setHumedad_habitacion2(humedad_habitacion2);
+
+				errores4=0;
+
+			}
 		}catch (Exception e)
 		{
-			//errores4++;
-			log.error("Fallo sensor habitación2");
+			e.printStackTrace();
+			
+			errores4++;
 
-			//if (errores4>ERRORES_MAXIMOS)
-			//sistema.setErrorSistema(ErroresSistema.SENSORES);
+
+			log.error("Fallo sensor habitación2 ESP8266");
+
+			if (errores4>ERRORES_MAXIMOS)
+				sistema.setErrorSistema(ErroresSistema.SENSORES);
 		}
-		
-		
+
+
 		try
 		{
 			res= programa_externo.ejecutar(config.getProgramaPlaca());
-			
-			
+
+
 			partes = res.split("=");
 			partes = partes[1].split("'");
-			
-			
+
+
 			temp_placa = Float.parseFloat(partes[0]);							
-			
-			
+
+
 			sistema.setTemp_raspi(temp_placa);
 			errores5=0;
 
@@ -162,7 +203,7 @@ public class SensorTempertura extends TimerTask{
 			{
 				sistema.setErrorSistema(ErroresSistema.TEMP_PLACA);
 			}
-			
+
 		}catch (Exception e)
 		{			
 			errores5++;
@@ -171,7 +212,7 @@ public class SensorTempertura extends TimerTask{
 
 			if (errores5>ERRORES_MAXIMOS)
 				sistema.setErrorSistema(ErroresSistema.SENSOR_PLACA);
-			
+
 		}
 	}
 }

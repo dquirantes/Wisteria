@@ -28,8 +28,8 @@ public class PanelActuador extends TimerTask {
 
 		String res;		
 
-		res = basedatos.obtenerOrden();		
-		//res = "CLIMATIZADOR;10;5;true;DORMITORIO";
+		//res = basedatos.obtenerOrden();		
+		res = "CLIMATIZADOR;10;5;true;DORMITORIO";
 
 		if (res=="")
 		{
