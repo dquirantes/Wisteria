@@ -264,7 +264,7 @@ public class SistemaDomotico {
 	{
 		String res = "Salón: " + temp + "º - " ;
 		res += "Dormitorio: " + temp_dormitorio+ "º - " ;
-//		res += "Habitacion1: " + temp_habitacion1+ "º - " ;
+		res += "Habitacion1: " + temp_habitacion1+ "º - " ;
 //		res += "Habitacion2: " + temp_habitacion2+ "º -  " ;
 		res += "Temp Externa: " + temp_ext + "º -  " ;
 		res += "Raspberry: " + temp_raspi + "º -  " ;

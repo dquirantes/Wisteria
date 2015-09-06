@@ -116,9 +116,11 @@ public class SensorTempertura extends TimerTask{
 					new InputStreamReader(con.getInputStream()));
 
 
+			log.debug ("Recibido ESP8266");
+			
 			if ((linea = in.readLine()) != null) 
 			{
-				log.debug ("Recibido: " + linea);
+				log.debug (linea);
 				partes = linea.split(",");
 
 				humedad_habitacion1 = Float.parseFloat(partes[1]);
@@ -144,7 +146,7 @@ public class SensorTempertura extends TimerTask{
 
 
 
-		try
+		/*try
 		{
 
 			log.debug ("Conectado ESP8266 habitacion2");
@@ -180,7 +182,7 @@ public class SensorTempertura extends TimerTask{
 
 			if (errores4>ERRORES_MAXIMOS)
 				sistema.setErrorSistema(ErroresSistema.SENSORES);
-		}
+		}*/
 
 
 		try

@@ -63,7 +63,7 @@ public class TemperaturaExterna  extends TimerTask
 
 		} catch (Exception e)
 		{
-			log.error ("Fallo OpenWeather");
+			log.error ("Fallo OpenWeather " + e);
 			//e.printStackTrace();
 		}
 	}
@@ -110,7 +110,7 @@ public class TemperaturaExterna  extends TimerTask
 		Double result_temp = JSONObject_main.getDouble("temp");
 		Double result_pressure = JSONObject_main.getDouble("pressure");
 		Double result_humidity = JSONObject_main.getDouble("humidity");
-		Double result_temp_min = JSONObject_main.getDouble("temp_min");
+		//Double result_temp_min;//= JSONObject_main.getDouble("temp_min");
 		//Double result_temp_max = JSONObject_main.getDouble("temp_max");
 
 		//"wind"
@@ -143,7 +143,7 @@ public class TemperaturaExterna  extends TimerTask
 				"sys\tcountry: " + result_country + "\tsunrise: " + result_sunrise + "\tsunset: " + result_sunset + "\n" +
 				result_weather + "\n"+
 				"base: " + result_base + "\n" +
-				"main\ttemp: " + result_temp + "\thumidity: " + result_humidity + "\tpressure: " + result_pressure + "\ttemp_min: " + result_temp_min + "\ttemp_max: " + result_temp_min + "\n" +
+				"main\ttemp: " + result_temp + "\thumidity: " + result_humidity + "\tpressure: " + result_pressure + "\n" +
 				result_wind + "\n" +
 				"clouds\tall: " + result_all + "\n" +
 				"dt: " + result_dt + "\n" +
