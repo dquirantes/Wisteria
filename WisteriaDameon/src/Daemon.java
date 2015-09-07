@@ -64,21 +64,24 @@ public class Daemon {
 		timer_sensor.scheduleAtFixedRate(sensor, 0, configuracion.gettSensor()*1000);
 
 
+
+		
 		TemperaturaExterna temp_externa = new TemperaturaExterna (configuracion.getURLTiempo(),sistema);
 		Timer timer_externa = new Timer(true);       
 		timer_externa.scheduleAtFixedRate(temp_externa , 0, configuracion.gettExterno()*1000);
 
+		
 
 		PanelActuador actuador = new PanelActuador(sistema, basedatos);  
 		Timer timer_actuador = new Timer(true);       
 		timer_actuador.scheduleAtFixedRate(actuador , 0, configuracion.gettActuador() * 1000);
 
+		
 		Registro registro = new Registro (sistema, basedatos);  
 		Timer timer_registro = new Timer(true);       
 		timer_registro.scheduleAtFixedRate(registro, configuracion.gettRegistro()*1000, configuracion.gettRegistro()* 1000);
 
  
-
 		
 
 
@@ -91,7 +94,9 @@ public class Daemon {
 		NotificacionesInformacion notificaciones_info = new NotificacionesInformacion (notificaciones,sistema);
 		Timer timer_notificaciones = new Timer(true);
 		timer_notificaciones.scheduleAtFixedRate(notificaciones_info, 30000, configuracion.gettNotificaciones()* 1000);
+
 		
+
 		
 		if (configuracion.getEnviarCorreo())
 			correo.enviarCorreo(configuracion.getCorrreoTo(),configuracion.getCorrreoAsunto(),"Arrancando Sistema Domotico");
@@ -172,6 +177,14 @@ public class Daemon {
 			basedatos.cerrar((sistema.getTemperatura()));
 		}
 
+		
+		// Cancela los timer
+		log.debug("Cancela los timer");
+		timer_sensor.cancel();
+		timer_externa.cancel();
+		timer_actuador.cancel();		
+		timer_registro.cancel();
+		timer_notificaciones.cancel();
 
 		long ms_fin = System.currentTimeMillis();
 		
@@ -179,6 +192,7 @@ public class Daemon {
 		notificaciones.enviar("Parada sistema domótico");
 		log.info("Sale de la aplicacion");
 
+		
 	}
 
 
