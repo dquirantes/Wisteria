@@ -34,7 +34,7 @@ public class Daemon {
 
 
 		Configuracion configuracion = new Configuracion (path_configuracion);
-		EnviarNotificaciones notificaciones = new EnviarNotificaciones (configuracion.getProgramaNotificaciones());
+		
 
 
 		log.info("Arrancando Wisteria Daemon David");
@@ -59,38 +59,22 @@ public class Daemon {
 
 		Rele rele = new Rele(configuracion,sistema);
 
-		SensorTempertura sensor = new SensorTempertura(sistema,configuracion.getProgramaSensor(),configuracion);  
-		Timer timer_sensor = new Timer(true);       
-		timer_sensor.scheduleAtFixedRate(sensor, 0, configuracion.gettSensor()*1000);
-
-
-
-		
-		TemperaturaExterna temp_externa = new TemperaturaExterna (configuracion.getURLTiempo(),sistema);
-		Timer timer_externa = new Timer(true);       
-		timer_externa.scheduleAtFixedRate(temp_externa , 0, configuracion.gettExterno()*1000);
-
-		
-
-		PanelActuador actuador = new PanelActuador(sistema, basedatos);  
-		Timer timer_actuador = new Timer(true);       
-		timer_actuador.scheduleAtFixedRate(actuador , 0, configuracion.gettActuador() * 1000);
-
-		
-		Registro registro = new Registro (sistema, basedatos);  
-		Timer timer_registro = new Timer(true);       
-		timer_registro.scheduleAtFixedRate(registro, configuracion.gettRegistro()*1000, configuracion.gettRegistro()* 1000);
-
- 
+	
 		
 
 
 		File FLAG_FILE = new File(configuracion.getFicheroTemporal());
 
+		if (FLAG_FILE.exists())
+		{
+			log.info ("El fichero temporal existe");
+		}
 
 		EnviarCorreo correo = new EnviarCorreo(configuracion.getCorrreoFrom(), configuracion.getCorrreoUsuario(), configuracion.getCorrreoPassword(), configuracion.getCorrreoHost(),configuracion.getCorrreoPuerto());
 		
 
+		EnviarNotificaciones notificaciones = new EnviarNotificaciones (configuracion.getProgramaNotificaciones());
+		notificaciones.enviar("Arrancando Sistema Domotico");
 		NotificacionesInformacion notificaciones_info = new NotificacionesInformacion (notificaciones,sistema);
 		Timer timer_notificaciones = new Timer(true);
 		timer_notificaciones.scheduleAtFixedRate(notificaciones_info, 30000, configuracion.gettNotificaciones()* 1000);
@@ -102,14 +86,37 @@ public class Daemon {
 			correo.enviarCorreo(configuracion.getCorrreoTo(),configuracion.getCorrreoAsunto(),"Arrancando Sistema Domotico");
 
 		
-		notificaciones.enviar("Arrancando Sistema Domotico");
+	
+
+		// Arrancando el resto de servicios
+		
+		SensorTempertura sensor = new SensorTempertura(sistema,configuracion.getProgramaSensor(),configuracion);  
+		Timer timer_sensor = new Timer(true);       
+		timer_sensor.scheduleAtFixedRate(sensor, 0, configuracion.gettSensor()*1000);
+		
+		
+		TemperaturaExterna temp_externa = new TemperaturaExterna (configuracion.getURLTiempo(),sistema);
+		Timer timer_externa = new Timer(true);       
+		timer_externa.scheduleAtFixedRate(temp_externa , 0, configuracion.gettExterno()*1000);
+		
+		
+		PanelActuador actuador = new PanelActuador(sistema, basedatos);  
+		Timer timer_actuador = new Timer(true);       
+		timer_actuador.scheduleAtFixedRate(actuador , 0, configuracion.gettActuador() * 1000);
+		
+		
+		Registro registro = new Registro (sistema, basedatos,configuracion.getFicheroWeb());  
+		Timer timer_registro = new Timer(true);       
+		timer_registro.scheduleAtFixedRate(registro, configuracion.gettRegistro()*1000, configuracion.gettRegistro()* 1000);
 
 
-		try {
-			log.debug("Creando fichero " + configuracion.getFicheroTemporal());
+		try 
+		{
+			log.debug("Creando fichero temporal: " + configuracion.getFicheroTemporal());
 			FLAG_FILE.createNewFile();
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException e1) 
+		{
+			log.error(e1);
 		}
 
 
@@ -150,10 +157,10 @@ public class Daemon {
 				
 
 				// Si hay cambio de estado actualizar en BBDD
-				registro.run();
+				//registro.run();
 
 				// Si hay cambio notificar estado
-				notificaciones_info.run();
+				//notificaciones_info.run();
 			}
 
 			try {

@@ -114,11 +114,11 @@ public class TemperaturaExterna  extends TimerTask
 		//Double result_temp_max = JSONObject_main.getDouble("temp_max");
 
 		//"wind"
-		JSONObject JSONObject_wind = jsonObject.getJSONObject("wind");
-		Double result_speed = JSONObject_wind.getDouble("speed");
+		//JSONObject JSONObject_wind = jsonObject.getJSONObject("wind");
+		//Double result_speed = JSONObject_wind.getDouble("speed");
 		//Double result_gust = JSONObject_wind.getDouble("gust");
-		Double result_deg = JSONObject_wind.getDouble("deg");
-		String result_wind = "wind\tspeed: " + result_speed + "\tdeg: " + result_deg;
+		//Double result_deg = JSONObject_wind.getDouble("deg");
+		//String result_wind = "wind\tspeed: " + result_speed + "\tdeg: " + result_deg;
 
 		JSONObject JSONObject_clouds = jsonObject.getJSONObject("clouds");
 		int result_all = JSONObject_clouds.getInt("all");
@@ -144,7 +144,7 @@ public class TemperaturaExterna  extends TimerTask
 				result_weather + "\n"+
 				"base: " + result_base + "\n" +
 				"main\ttemp: " + result_temp + "\thumidity: " + result_humidity + "\tpressure: " + result_pressure + "\n" +
-				result_wind + "\n" +
+				//result_wind + "\n" +
 				"clouds\tall: " + result_all + "\n" +
 				"dt: " + result_dt + "\n" +
 				"id: " + result_id + "\n" +

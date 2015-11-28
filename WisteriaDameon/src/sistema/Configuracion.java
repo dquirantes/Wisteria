@@ -53,7 +53,7 @@ public class Configuracion {
 	
 	private float tmp_Margen;
 	
-	
+	private String fichero_web;
 	
 	
 	
@@ -109,6 +109,7 @@ public class Configuracion {
 			tNotificaciones= Long.parseLong(prop.getProperty("tNotificaciones"));
 			
 			
+			fichero_web = prop.getProperty("fichero_web");
 			
 			
 		}catch (Exception e)
@@ -283,6 +284,10 @@ public class Configuracion {
 		return programa_placa;
 	}	
 
+	public String getFicheroWeb()
+	{
+		return fichero_web;
+	}
 }
 
 

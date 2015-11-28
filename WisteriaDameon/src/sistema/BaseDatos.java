@@ -35,6 +35,7 @@ public class BaseDatos {
 		catch (Exception e)
 		{
 			log.error ("Error BBDD " + e);
+
 		}		
 
 
@@ -145,9 +146,9 @@ public class BaseDatos {
 
 	}
 	
-	public Boolean insertarSistema(float temperatura, float humedad, Double tempertura_externa, String rele, float temperatura_climatizacion, float temperatura_habitacion, float humedad_habitacion, float temperatura_habitacion1, float humedad_habitacion1,float temperatura_habitacion2, float humedad_habitacion2, float temp_rapsberry) 
+	public Boolean insertarSistema(float temperatura, float humedad, Double tempertura_externa, String rele, float temperatura_climatizacion, float temperatura_habitacion, float humedad_habitacion, float temperatura_habitacion1, float humedad_habitacion1,float temperatura_habitacion2, float humedad_habitacion2, float temp_rapsberry, String opciones_modo) 
 	{
-		String query = "INSERT INTO SISTEMA (FECHA,COD_MODO,RELE,TEMP_SALON,HUMEDAD_SALON,TEMP_EXTERNA,TEMP_CLIMATIZADOR,TEMP_DORMITORIO, HUMEDAD_DORMITORIO,TEMP_HABITACION1, HUMEDAD_HABITACION1,TEMP_HABITACION2, HUMEDAD_HABITACION2,TEMP_RASPI) values (now(),?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO SISTEMA (FECHA,COD_MODO,RELE,TEMP_SALON,HUMEDAD_SALON,TEMP_EXTERNA,TEMP_CLIMATIZADOR,TEMP_DORMITORIO, HUMEDAD_DORMITORIO,TEMP_HABITACION1, HUMEDAD_HABITACION1,TEMP_HABITACION2, HUMEDAD_HABITACION2,TEMP_RASPI,OPCIONES_MODO) values (now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		
 		try
@@ -170,6 +171,7 @@ public class BaseDatos {
 			preparedStmt.setFloat(12, humedad_habitacion2);
 
 			preparedStmt.setFloat(13, temp_rapsberry);
+			preparedStmt.setString(14, opciones_modo);
 			
 			preparedStmt.execute();
 
