@@ -13,7 +13,7 @@ import sistema.ProgramaExterno;
 
 public class SensorTempertura extends TimerTask{
 
-	static final int ERRORES_MAXIMOS= 3;
+	static final int ERRORES_MAXIMOS= 5;
 
 	private static final Logger log = Logger.getLogger("Dameon");
 
@@ -26,7 +26,7 @@ public class SensorTempertura extends TimerTask{
 	private int errores1 = 0;
 	private int errores2 = 0;
 	//private int errores3 = 0;
-	//private int errores4 = 0;
+	private int errores4 = 0;
 	private int errores5 = 0;
 
 
@@ -51,10 +51,10 @@ public class SensorTempertura extends TimerTask{
 		float temp;
 		float humedad_dormitorio;
 		float temp_dormitorio;
-		float humedad_habitacion1;
-		float temp_habitacion1;
-		//float humedad_habitacion2;
-		//float temp_habitacion2;				
+		/*float humedad_habitacion1;
+		float temp_habitacion1;*/
+		float humedad_habitacion2;
+		float temp_habitacion2;				
 
 		float temp_placa;
 		String partes[];
@@ -105,7 +105,7 @@ public class SensorTempertura extends TimerTask{
 		}
 
 
-		try
+	/*	try
 		{
 
 			log.debug ("Conectado ESP8266 habitacion1");
@@ -141,13 +141,13 @@ public class SensorTempertura extends TimerTask{
 			log.error("Fallo sensor habitación1 ESP8266");
 
 			// No es necesario que funcione ese sensor
-			/*if (errores3>ERRORES_MAXIMOS)
-				sistema.setErrorSistema(ErroresSistema.SENSORES);*/
-		}
+			//if (errores3>ERRORES_MAXIMOS)
+				//sistema.setErrorSistema(ErroresSistema.SENSORES);
+		}*/
 
 
 
-		/*try
+		try
 		{
 
 			log.debug ("Conectado ESP8266 habitacion2");
@@ -182,8 +182,13 @@ public class SensorTempertura extends TimerTask{
 			log.error("Fallo sensor habitación2 ESP8266");
 
 			if (errores4>ERRORES_MAXIMOS)
-				sistema.setErrorSistema(ErroresSistema.SENSORES);
-		}*/
+			{
+				sistema.setTemp_habitacion2(0f);
+				sistema.setHumedad_habitacion2(0f);				
+				//sistema.setErrorSistema(ErroresSistema.SENSORES);
+			}
+
+		}
 
 
 		try

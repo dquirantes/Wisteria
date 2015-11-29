@@ -237,6 +237,15 @@ public class SistemaDomotico {
 		return temp_raspi;
 	}
 
+	public float getHumedad_Habitacion1()
+	{
+		return humedad_habitacion1;
+	}
+	
+	public float getHumedad_Habitacion2()
+	{
+		return humedad_habitacion2;
+	}
 	public void setTemp_raspi (Float temp)
 	{
 		this.temp_raspi= temp;
