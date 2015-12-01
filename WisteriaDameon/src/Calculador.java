@@ -100,7 +100,7 @@ public class Calculador
 			log.debug ("Modo apagado");
 			nuevo_estado = EstadoRele.CERRADO;
 		}
-		else if (sistema.getModoSistema() == ModoSistema.ON)
+		else if (sistema.getModoSistema() == ModoSistema.ON_FIJO)
 		{
 			log.debug ("Modo siempre encendido");
 			nuevo_estado = EstadoRele.ABIERTO;

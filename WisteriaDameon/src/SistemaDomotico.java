@@ -1,6 +1,6 @@
 
 enum EstadoRele {ABIERTO, CERRADO};
-enum ModoSistema{ON, OFF, CLIMATIZADOR};
+enum ModoSistema{ON_FIJO, OFF, CLIMATIZADOR};
 enum OpcionesModo{SALON, DORMITORIO,HABITACION1, HABITACION2,  MEDIA, MINIMO, MAXIMO};
 
 enum ErroresSistema{BBDD, SENSORES,ACTUADOR, REGISTRO, TEMP_PLACA, SENSOR_PLACA};
@@ -262,8 +262,14 @@ public class SistemaDomotico {
 		res += "Externa: " + temp_ext + "º -  " ;
 		res += "Raspberry: " + temp_raspi + "º -  " ;
 		
-		res += "Modo: " + modo + " (" + opciones_modo+ ") "+ temp_climatizador + "º -  " ;
-		res += "Rele: " + rele;
+		
+		if (modo.equals(ModoSistema.CLIMATIZADOR))
+			res += "Modo: " + modo + " (" + opciones_modo+ ") "+ temp_climatizador + "º -  " ;			
+		else
+			res += "Modo: " + modo + " - " ;
+		
+		
+		res += "Caledera: " + rele;
 
 		return res;
 
@@ -271,15 +277,25 @@ public class SistemaDomotico {
 
 	public String toString_info ()
 	{
-		String res = "Salón: " + temp + "º - " ;
+		String res = "Salón: " + temp + "º - " ;		
 		res += "Dormitorio: " + temp_dormitorio+ "º - " ;
-		res += "Habitacion1: " + temp_habitacion1+ "º - " ;
-//		res += "Habitacion2: " + temp_habitacion2+ "º -  " ;
+		
+		if (temp_habitacion1!=0)
+			res += "Habitacion1: " + temp_habitacion1+ "º - " ;
+
+		if (temp_habitacion2!=0)
+			res += "Habitacion2: " + temp_habitacion2+ "º -  " ;
+		
+		
 		res += "Temp Externa: " + temp_ext + "º -  " ;
 		res += "Raspberry: " + temp_raspi + "º -  " ;
 		
-		res += "Modo: " + modo + " (" + opciones_modo+ ") "+ temp_climatizador + "º -  " ;
-		res += "Rele: " + rele;
+		if (modo.equals(ModoSistema.CLIMATIZADOR))
+			res += "Modo: " + modo + " (" + opciones_modo+ ") "+ temp_climatizador + "º -  " ;			
+		else
+			res += "Modo: " + modo + " - " ;
+		
+		res += "Caldera: " + rele;
 
 		return res;
 
