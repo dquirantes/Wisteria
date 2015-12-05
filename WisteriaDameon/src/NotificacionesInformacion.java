@@ -19,8 +19,16 @@ public class NotificacionesInformacion  extends TimerTask {
 
 
 	public void run() {
-		log.debug("Enviar notificaciones!");
-		notificaciones.enviar(sistema.toString_info());
+		
+		if (sistema.getEnviarNotificaciones())
+		{
+			log.debug("Enviar notificaciones!");
+			notificaciones.enviar(sistema.toString_info());
+		}else
+		{
+			log.debug("No habilitado el envío de notificaciones!");
+		}
+		
 		
 	}
 
