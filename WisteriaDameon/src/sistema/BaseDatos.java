@@ -60,24 +60,24 @@ public class BaseDatos {
 
 			
 			// Recorremos el resultado, mientras haya registros para leer, y escribimos el resultado en pantalla. 
-			while (rs.next()) 
+			if (rs.next()) 
 			{ 				 
 
 				codigo_modo = Integer.parseInt(rs.getString(3));
 				
-				res = rs.getString(1) + ";" +rs.getString(2) + ";" +rs.getString(4) + ";" + rs.getBoolean(5) + ";" + rs.getString(6);						
-				return res;
-
-			}
+				res = rs.getString(1) + ";" +rs.getString(2) + ";" +rs.getString(4) + ";" + rs.getBoolean(5) + ";" + rs.getString(6);										
+			}else
+				log.debug("No se ha recibido nada de la BBDD");
 
 
 
 		} catch (Exception e)
 		{			
-			log.error(e);			
+			log.error("Fallo obtener orden: " + e);			
 		}
 
 
+		log.debug("Fin obtener orden");
 		return res;
 
 
