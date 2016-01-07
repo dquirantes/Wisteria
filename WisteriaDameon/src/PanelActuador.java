@@ -70,6 +70,8 @@ public class PanelActuador extends TimerTask {
 			}catch (Exception e)
 			{
 				log.error("Exception actuador");
+				log.error(e);
+				e.printStackTrace();
 				sistema.setErrorSistema(ErroresSistema.ACTUADOR);
 			}
 			
