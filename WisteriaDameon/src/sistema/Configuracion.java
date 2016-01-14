@@ -55,6 +55,7 @@ public class Configuracion {
 	
 	private String fichero_web;
 	
+	private int puerto_Web;
 	
 	
 	public Configuracion(String pathProperties) {
@@ -110,6 +111,7 @@ public class Configuracion {
 			
 			
 			fichero_web = prop.getProperty("fichero_web");
+			puerto_Web= Integer.parseInt(prop.getProperty("puerto_Web"));
 			
 			
 		}catch (Exception e)
@@ -287,6 +289,10 @@ public class Configuracion {
 	public String getFicheroWeb()
 	{
 		return fichero_web;
+	}
+	public int getPuerto()
+	{
+		return puerto_Web; 
 	}
 }
 

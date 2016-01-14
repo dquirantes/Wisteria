@@ -80,6 +80,8 @@ public class Daemon {
 		timer_notificaciones.scheduleAtFixedRate(notificaciones_info, 30000, configuracion.gettNotificaciones()* 1000);
 
 		
+		Servidor servidor = new Servidor(sistema, notificaciones,configuracion, basedatos);
+		servidor.start();
 
 		
 		if (configuracion.getEnviarCorreo())
@@ -193,6 +195,8 @@ public class Daemon {
 		timer_registro.cancel();
 		timer_notificaciones.cancel();
 
+		// Cierra el servidor
+		servidor.cerrar();
 		long ms_fin = System.currentTimeMillis();
 		
 		log.info ("Tiempo ejecucion: " + (ms_fin-ms_inicio)/1000 + " sg");

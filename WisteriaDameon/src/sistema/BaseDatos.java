@@ -189,4 +189,35 @@ public class BaseDatos {
 		return true;
 
 	}
+	public Boolean insertarInstruccion(int codigo_modo,float temperatura,String usuario, boolean notificar, String opciones_modo) 
+	{
+		String query = "INSERT INTO INSTRUCCION (COD_MODO,TEMPERATURA,USUARIO,FECHA,NOTIFICAR,OPCIONES_MODO)"
+				+ "values (?,?,?,now(),?,?)";
+				
+		try
+		{
+				
+			PreparedStatement preparedStmt = cadena_conexion.prepareStatement(query);
+			preparedStmt.setInt(1, codigo_modo);
+			preparedStmt.setFloat(2, temperatura);
+			preparedStmt.setString(3, usuario);						
+			preparedStmt.setBoolean(4,notificar);
+			preparedStmt.setString(5, opciones_modo);
+			
+			preparedStmt.execute();
+			
+			log.debug ("Insertada informacion en la BBDD correctamente");			
+					
+			
+		}catch (Exception e )
+		{
+			log.error ("Fallo insertarInstruccion " + e);
+			e.printStackTrace();
+			log.error ("query:" + query);					
+			return false;			
+		}
+
+		return true;
+
+	}
 }

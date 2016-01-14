@@ -28,8 +28,8 @@ public class PanelActuador extends TimerTask {
 
 		String res;		
 
-		res = basedatos.obtenerOrden();		
-		//res = "CLIMATIZADOR;10;5;true;DORMITORIO";
+		//res = basedatos.obtenerOrden();		
+		res = "CLIMATIZADOR;10;5;true;DORMITORIO";
 
 		if (res=="")
 		{
@@ -41,7 +41,7 @@ public class PanelActuador extends TimerTask {
 			{
 				String [] partes = res.split(";");
 
-				log.debug("Recibido " + partes);
+				log.debug("Recibido: " + res);
 
 				int codigo_instruccion_nuevo= Integer.parseInt(partes[2]);
 				float temp = Float.parseFloat(partes[1]);
@@ -70,8 +70,6 @@ public class PanelActuador extends TimerTask {
 			}catch (Exception e)
 			{
 				log.error("Exception actuador");
-				log.error(e);
-				e.printStackTrace();
 				sistema.setErrorSistema(ErroresSistema.ACTUADOR);
 			}
 			
