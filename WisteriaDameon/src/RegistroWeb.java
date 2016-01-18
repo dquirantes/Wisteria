@@ -32,7 +32,7 @@ public class RegistroWeb extends TimerTask {
 
 
 		// No escribe si la temperatura externa es NULL
-		//if (sistema.getTempExterna()!=null)
+		if (sistema.getTempExterna()!=null)
 		{
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 			Date date = new Date();
