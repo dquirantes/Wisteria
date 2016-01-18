@@ -162,7 +162,7 @@ public class Daemon {
 				
 
 				// Si hay cambio de estado actualizar en BBDD
-				//registro.run();
+				registro.run();
 
 				// Si hay cambio notificar estado
 				//notificaciones_info.run();

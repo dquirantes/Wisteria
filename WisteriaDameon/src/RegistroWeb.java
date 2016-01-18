@@ -31,6 +31,7 @@ public class RegistroWeb extends TimerTask {
 		log.debug ("Registrar informacion Fichero Web");
 
 
+		//TODO: comprobar esto antes de subir
 		// No escribe si la temperatura externa es NULL
 		if (sistema.getTempExterna()!=null)
 		{
@@ -38,9 +39,10 @@ public class RegistroWeb extends TimerTask {
 			Date date = new Date();
 			String res2 = dateFormat.format(date) + "," + sistema.getTemperatura() 
 			+ "," + sistema.getTemperatura_dormitorio()
-			+ "," + sistema.getTempExterna() +
+			+ "," + sistema.getTemperatura_habitacion2()
+			+ "," + sistema.getTempExterna() +			
 			System.getProperty("line.separator");
-
+			
 			try
 			{
 

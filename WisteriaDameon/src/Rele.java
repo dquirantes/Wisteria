@@ -58,8 +58,7 @@ public class Rele {
 			try {
 				programa.ejecutar(configuracion.getProgramaCerrar());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Error cerrar rele " + e) ;
 			}
 			sistema.setEstadoRele(EstadoRele.CERRADO);
 			return true;

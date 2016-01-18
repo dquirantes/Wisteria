@@ -28,6 +28,7 @@ public class PanelActuador extends TimerTask {
 
 		String res;		
 
+		//TODO: comprobar esto antes de subir
 		res = basedatos.obtenerOrden();		
 		//res = "CLIMATIZADOR;10;5;true;DORMITORIO";
 
