@@ -107,11 +107,14 @@ public class Daemon {
 		timer_actuador.scheduleAtFixedRate(actuador , 0, configuracion.gettActuador() * 1000);
 		
 		
-		Registro registro = new Registro (sistema, basedatos,configuracion.getFicheroWeb());  
+		Registro registro = new Registro (sistema, basedatos);  
 		Timer timer_registro = new Timer(true);       
 		timer_registro.scheduleAtFixedRate(registro, configuracion.gettRegistro()*1000, configuracion.gettRegistro()* 1000);
 
-
+		RegistroWeb registro_web = new RegistroWeb (sistema, configuracion.getFicheroWeb());
+		Timer timer_registro_web = new Timer(true);       
+		timer_registro_web.scheduleAtFixedRate(registro_web, configuracion.gettRegistroWeb()*1000, configuracion.gettRegistroWeb()* 1000);
+		
 		try 
 		{
 			log.debug("Creando fichero temporal: " + configuracion.getFicheroTemporal());
@@ -193,6 +196,7 @@ public class Daemon {
 		timer_externa.cancel();
 		timer_actuador.cancel();		
 		timer_registro.cancel();
+		timer_registro_web.cancel();
 		timer_notificaciones.cancel();
 
 		// Cierra el servidor

@@ -49,6 +49,7 @@ public class Configuracion {
 	private long tExterno;
 	private long tBucle;
 	private long tRegistro;
+	private long tRegistroWeb;
 	private long tNotificaciones;
 	
 	private float tmp_Margen;
@@ -107,6 +108,7 @@ public class Configuracion {
 			tExterno= Long.parseLong(prop.getProperty("tExterno"));
 			tBucle= Long.parseLong(prop.getProperty("tBucle"));
 			tRegistro= Long.parseLong(prop.getProperty("tRegistro"));
+			tRegistroWeb= Long.parseLong(prop.getProperty("tRegistroWeb"));
 			tNotificaciones= Long.parseLong(prop.getProperty("tNotificaciones"));
 			
 			
@@ -161,6 +163,11 @@ public class Configuracion {
 	public long gettRegistro()
 	{
 		return tRegistro;
+	}
+	
+	public long gettRegistroWeb()
+	{
+		return tRegistroWeb;
 	}
 	
 	public Float get_tempMaximaPlaca()
