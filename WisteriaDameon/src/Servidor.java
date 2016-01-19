@@ -19,12 +19,16 @@ class Servidor extends Thread
 	static final String EXTERNA = "externa";
 	static final String SALIR = "salir";
 
+	static final String CALEFACCION_DORMITORIO = "calefaccion_dormitorio";
+	static final String CALEFACCION_SALON = "calefaccion_salon";
+	static final String CALEFACCION_APAGAR = "calefaccion_apagar";
+	
 	private static final Logger log = Logger.getLogger("Dameon");
 
 
 
 	SistemaDomotico sistema;
-	EnviarNotificaciones notifiaciones;
+	EnviarNotificaciones notificaciones;
 	Configuracion configuracion;
 	BaseDatos basedatos;
 	
@@ -33,7 +37,7 @@ class Servidor extends Thread
 	public Servidor(SistemaDomotico sistema, EnviarNotificaciones notificaciones, Configuracion configuracion, BaseDatos bbdd) 
 	{
 		this.sistema= sistema;
-		this.notifiaciones = notificaciones;
+		this.notificaciones = notificaciones;
 		this.configuracion =configuracion;
 		this.basedatos = bbdd;
 	}
@@ -50,7 +54,7 @@ class Servidor extends Thread
 	}
 	public void run() 
 	{
-		//String respuesta = "";
+		String respuesta = "";
 		String recibido;
 
 		try 
@@ -77,46 +81,46 @@ class Servidor extends Thread
 				if (recibido.toLowerCase().equals(INFO))
 				{
 					// Envia el estado del sistema por notificaciones
-					notifiaciones.enviar(sistema.toString_info());										
+					respuesta = sistema.toString_info();										
 				}
 				else if (recibido.toLowerCase().equals(SALON))
 				{				
-					notifiaciones.enviar("Salón: " + sistema.getTemperatura());										
+					respuesta = "Salón: " + sistema.getTemperatura();										
 				}
 				else if (recibido.toLowerCase().equals(DORMITORIO))
 				{			
-					notifiaciones.enviar("Dormitorio: " + sistema.getTemperatura_dormitorio());										
+					respuesta = "Dormitorio: " + sistema.getTemperatura_dormitorio();										
 				}			
 				else if (recibido.toLowerCase().equals(HABITACION1))
 				{
-					notifiaciones.enviar("Habitación1: " + sistema.getTemperatura_habitacion1());										
+					respuesta = "Habitación1: " + sistema.getTemperatura_habitacion1();										
 				}
 				else if (recibido.toLowerCase().equals(HABITACION2))
 				{				
-					notifiaciones.enviar("Habitación2: " + sistema.getTemperatura_habitacion2());										
+					respuesta = "Habitación2: " + sistema.getTemperatura_habitacion2();										
 				}
 				else if (recibido.toLowerCase().equals(RASPBERRY))
 				{					
-					notifiaciones.enviar("Raspberry: " + sistema.getTemperatura_raspi());				
+					respuesta = "Raspberry: " + sistema.getTemperatura_raspi();				
 				}
 				else if (recibido.toLowerCase().equals(EXTERNA))
 				{					
-					notifiaciones.enviar("Las Rozas: " + sistema.getTempExterna());				
+					respuesta = "Las Rozas: " + sistema.getTempExterna();				
 				}
-				else if (recibido.toLowerCase().equals("calefaccion_dormitorio"))
+				else if (recibido.toLowerCase().equals(CALEFACCION_DORMITORIO))
 				{					
 					basedatos.insertarInstruccion(1, 21, "david", true, "DORMITORIO");									
-					//notifiaciones.enviar("Las Rozas: " + sistema.getTempExterna());				
+					//notificaciones.enviar("Las Rozas: " + sistema.getTempExterna());				
 				}
-				else if (recibido.toLowerCase().equals("calefaccion_salon"))
+				else if (recibido.toLowerCase().equals(CALEFACCION_SALON))
 				{					
 					basedatos.insertarInstruccion(1, 20.5f, "david", true, "SALON");									
-					//notifiaciones.enviar("Las Rozas: " + sistema.getTempExterna());				
+					//notificaciones.enviar("Las Rozas: " + sistema.getTempExterna());				
 				}
-				else if (recibido.toLowerCase().equals("apagar_calefaccion"))
+				else if (recibido.toLowerCase().equals(CALEFACCION_APAGAR))
 				{					
 					basedatos.insertarInstruccion(2, 21, "david", true, "SALON");									
-					//notifiaciones.enviar("Las Rozas: " + sistema.getTempExterna());				
+					//notificaciones.enviar("Las Rozas: " + sistema.getTempExterna());				
 				}
 				
 				else if (recibido.toLowerCase().equals(SALIR))
@@ -125,7 +129,7 @@ class Servidor extends Thread
 
 					if (FLAG_FILE.exists())
 					{										
-						notifiaciones.enviar("Comienza el proceso de apagado por Telegram recibido");
+						respuesta = "Comienza el proceso de apagado por Telegram recibido";
 						// Borrar el fichero temporal para salir
 						FLAG_FILE.delete();						
 					}	
@@ -138,7 +142,11 @@ class Servidor extends Thread
 
 
 				flujo.writeUTF("OK");
-				skCliente.close();				
+				skCliente.close();
+				
+				if (respuesta!="")
+					notificaciones.enviar(respuesta);
+					
 			}
 		} catch( Exception e ) 
 		{
