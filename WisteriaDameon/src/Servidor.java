@@ -62,10 +62,12 @@ class Servidor extends Thread
 			log.info("Arrancar servidor puerto: " + configuracion.getPuerto());
 			skServidor = new ServerSocket(configuracion.getPuerto());
 
-			String respuesta = "";
+			
 
 			while (true)
 			{
+				String respuesta = "";
+				
 				Socket skCliente = skServidor.accept(); 
 
 
