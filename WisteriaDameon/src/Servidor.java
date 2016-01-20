@@ -54,7 +54,7 @@ class Servidor extends Thread
 	}
 	public void run() 
 	{
-		String respuesta = "";
+		
 		String recibido;
 
 		try 
@@ -62,6 +62,7 @@ class Servidor extends Thread
 			log.info("Arrancar servidor puerto: " + configuracion.getPuerto());
 			skServidor = new ServerSocket(configuracion.getPuerto());
 
+			String respuesta = "";
 
 			while (true)
 			{
@@ -79,50 +80,45 @@ class Servidor extends Thread
 				DataOutputStream flujo= new DataOutputStream( aux );			
 
 				if (recibido.toLowerCase().equals(INFO))
-				{
-					// Envia el estado del sistema por notificaciones
+				{					
 					respuesta = sistema.toString_info();										
 				}
 				else if (recibido.toLowerCase().equals(SALON))
 				{				
-					respuesta = "Salón: " + sistema.getTemperatura();										
+					respuesta = "Salón: " + sistema.getTemperatura() + "º";										
 				}
 				else if (recibido.toLowerCase().equals(DORMITORIO))
 				{			
-					respuesta = "Dormitorio: " + sistema.getTemperatura_dormitorio();										
+					respuesta = "Dormitorio: " + sistema.getTemperatura_dormitorio() + "º";										
 				}			
 				else if (recibido.toLowerCase().equals(HABITACION1))
 				{
-					respuesta = "Habitación1: " + sistema.getTemperatura_habitacion1();										
+					respuesta = "Habitación1: " + sistema.getTemperatura_habitacion1() + "º";										
 				}
 				else if (recibido.toLowerCase().equals(HABITACION2))
 				{				
-					respuesta = "Habitación2: " + sistema.getTemperatura_habitacion2();										
+					respuesta = "Habitación2: " + sistema.getTemperatura_habitacion2() + "º";										
 				}
 				else if (recibido.toLowerCase().equals(RASPBERRY))
 				{					
-					respuesta = "Raspberry: " + sistema.getTemperatura_raspi();				
+					respuesta = "Raspberry: " + sistema.getTemperatura_raspi() + "º";;				
 				}
 				else if (recibido.toLowerCase().equals(EXTERNA))
 				{					
-					respuesta = "Las Rozas: " + sistema.getTempExterna();				
+					respuesta = "Las Rozas: " + sistema.getTempExterna() + "º";;				
 				}
 				else if (recibido.toLowerCase().equals(CALEFACCION_DORMITORIO))
 				{					
-					basedatos.insertarInstruccion(1, 21, "david", true, "DORMITORIO");									
-					//notificaciones.enviar("Las Rozas: " + sistema.getTempExterna());				
+					basedatos.insertarInstruccion(1, 21, "david", true, "DORMITORIO");															
 				}
 				else if (recibido.toLowerCase().equals(CALEFACCION_SALON))
 				{					
-					basedatos.insertarInstruccion(1, 20.5f, "david", true, "SALON");									
-					//notificaciones.enviar("Las Rozas: " + sistema.getTempExterna());				
+					basedatos.insertarInstruccion(1, 20.5f, "david", true, "SALON");																
 				}
 				else if (recibido.toLowerCase().equals(CALEFACCION_APAGAR))
 				{					
 					basedatos.insertarInstruccion(2, 21, "david", true, "SALON");									
-					//notificaciones.enviar("Las Rozas: " + sistema.getTempExterna());				
-				}
-				
+				}				
 				else if (recibido.toLowerCase().equals(SALIR))
 				{
 					File FLAG_FILE = new File(configuracion.getFicheroTemporal());
@@ -134,13 +130,13 @@ class Servidor extends Thread
 						FLAG_FILE.delete();						
 					}	
 				}
-
 				else
 				{
-					log.error("Opción incorrecta");				
+					log.error("Opción incorrecta servidor: " + recibido);
+					respuesta = "Opción incorrecta";
 				}
 
-
+				// Devuelve OK al cliente
 				flujo.writeUTF("OK");
 				skCliente.close();
 				
@@ -151,10 +147,7 @@ class Servidor extends Thread
 		} catch( Exception e ) 
 		{
 			log.error("Error Servidor "  + e.getMessage());
-			//System.out.println( e.getMessage() );
 		}		
-
-
 	}
 
 
