@@ -12,7 +12,7 @@ public class PanelActuador extends TimerTask {
 	private SistemaDomotico sistema;
 	private BaseDatos basedatos;
 
-	private int codigo_instruccion;
+	private int codigo_instruccion = 0;
 
 
 	public PanelActuador (SistemaDomotico sistema, BaseDatos basedatos)
@@ -47,17 +47,16 @@ public class PanelActuador extends TimerTask {
 				int codigo_instruccion_nuevo= Integer.parseInt(partes[2]);
 				float temp = Float.parseFloat(partes[1]);
 
-
-
-				sistema.setModoSistema(ModoSistema.valueOf(partes[0]));
-				sistema.setTempclimatizador(temp);
-				sistema.setEnviarNotificaciones(Boolean.parseBoolean(partes[3]));
-
-				sistema.set_opcionesModo(OpcionesModo.valueOf(partes[4]));
-
+			
 
 				if (codigo_instruccion_nuevo!=codigo_instruccion)
 				{
+					sistema.setModoSistema(ModoSistema.valueOf(partes[0]));
+					sistema.setTempclimatizador(temp);
+					sistema.setEnviarNotificaciones(Boolean.parseBoolean(partes[3]));
+					sistema.set_opcionesModo(OpcionesModo.valueOf(partes[4]));
+
+					
 					log.debug("Se ha recibido actualizacion " + codigo_instruccion_nuevo);
 					codigo_instruccion = codigo_instruccion_nuevo;
 					sistema.setAlcanzoTemperatura(false);
