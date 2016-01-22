@@ -23,6 +23,10 @@ class Servidor extends Thread
 	static final String CALEFACCION_SALON = "calefaccion_salon";
 	static final String CALEFACCION_APAGAR = "calefaccion_apagar";
 	
+	static final String NOTIFICACIONES = "notificaciones";
+	static final String NOTIFICACIONES_SI = "notificaciones_si";
+	static final String NOTIFICACIONES_NO = "notificaciones_no";
+	
 	private static final Logger log = Logger.getLogger("Dameon");
 
 
@@ -120,7 +124,22 @@ class Servidor extends Thread
 				else if (recibido.toLowerCase().equals(CALEFACCION_APAGAR))
 				{					
 					basedatos.insertarInstruccion(2, 21, "david", true, "SALON");									
-				}				
+				}
+				else if (recibido.toLowerCase().equals(NOTIFICACIONES))
+				{					
+					respuesta = "Notificaciones: " + sistema.getEnviarNotificaciones();
+				}
+				else if (recibido.toLowerCase().equals(NOTIFICACIONES_SI))
+				{					
+					respuesta = "Activiar notificaciones";
+					sistema.setEnviarNotificaciones(true);
+				}
+				else if (recibido.toLowerCase().equals(NOTIFICACIONES_NO))
+				{					
+					respuesta = "Desactivar notificaciones";
+					sistema.setEnviarNotificaciones(false);
+				}
+				
 				else if (recibido.toLowerCase().equals(SALIR))
 				{
 					File FLAG_FILE = new File(configuracion.getFicheroTemporal());
