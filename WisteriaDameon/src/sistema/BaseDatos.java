@@ -220,4 +220,44 @@ public class BaseDatos {
 		return true;
 
 	}
+	
+	
+	public TipoPosicion obtenerPosicion()
+	{
+		//String res = "";
+
+		TipoPosicion posicion = new TipoPosicion (); 
+
+		log.debug("obtenerOrden");
+		try
+		{
+			log.debug ("BBDD obtenerPosicion");
+			Statement s = cadena_conexion.createStatement(); 
+			ResultSet rs = s.executeQuery ("SELECT COD_INSTRUCCION, LATITUD, LONGITUD order by cod_instruccion desc limit 1");
+
+		
+			if (rs.next()) 
+			{ 				 
+
+				posicion.cod_instruccion = rs.getInt("COD_INSTRUCCION");
+				posicion.latitud = rs.getDouble("LATITUD");
+				posicion.longitud = rs.getDouble("LONGITUD");
+				//codigo_modo = Integer.parseInt(rs.getString(3));
+				
+				//res = rs.getString(1) + ";" +rs.getString(2) + ";" +rs.getString(4) + ";" + rs.getBoolean(5) + ";" + rs.getString(6);										
+			}else
+				log.debug("No se ha recibido nada de la BBDD");
+
+
+		} catch (Exception e)
+		{			
+			log.error("Fallo obtener Posicion: " + e);			
+		}
+
+
+		log.debug("Fin obtener posicion");
+		return posicion;
+
+
+	}
 }

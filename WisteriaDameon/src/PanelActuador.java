@@ -3,6 +3,7 @@ import java.util.TimerTask;
 import org.apache.log4j.Logger;
 
 import sistema.BaseDatos;
+import sistema.TipoPosicion;
 
 
 public class PanelActuador extends TimerTask {
@@ -77,6 +78,17 @@ public class PanelActuador extends TimerTask {
 
 		}
 
+		TipoPosicion posicion = basedatos.obtenerPosicion();
+		log.debug ("Posicion recibida: " + posicion.cod_instruccion + " lat: " + posicion.latitud + " long: " + posicion.longitud);
+		
+		
+		// C/Wisteria 
+		double long_casa = -3.9254872000000205;
+		double lat_casa = 40.51844359999999;
+		
+		double distancia = DistanceCalculator.distance(lat_casa, long_casa, posicion.latitud, posicion.longitud, "K");
+		
+		log.debug ("Distancia: " + distancia);
 		log.debug("FIN PanelActuador");
 
 	}
