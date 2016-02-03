@@ -233,7 +233,7 @@ public class BaseDatos {
 		{
 			log.debug ("BBDD obtenerPosicion");
 			Statement s = cadena_conexion.createStatement(); 
-			ResultSet rs = s.executeQuery ("SELECT COD_INSTRUCCION, LATITUD, LONGITUD order by cod_instruccion desc limit 1");
+			ResultSet rs = s.executeQuery ("SELECT COD_INSTRUCCION, LATITUD, LONGITUD FROM LOCALIZACION order by cod_instruccion desc limit 1");
 
 		
 			if (rs.next()) 

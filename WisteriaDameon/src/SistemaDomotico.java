@@ -1,3 +1,4 @@
+import sistema.TipoPosicion;
 
 enum EstadoRele {ABIERTO, CERRADO};
 enum ModoSistema{ON_FIJO, OFF, CLIMATIZADOR};
@@ -34,8 +35,17 @@ public class SistemaDomotico {
 	
 	private boolean enviarNotificaciones;
 	
+	private TipoPosicion posicion;
 	
 	
+	public TipoPosicion getPosicion()
+	{
+		return posicion;
+	}
+	public void setPosicion(TipoPosicion posicion)
+	{
+		this.posicion= posicion;		
+	}
 	
 	public void setEnviarNotificaciones(boolean enviar)
 	{

@@ -79,9 +79,11 @@ public class PanelActuador extends TimerTask {
 		}
 
 		TipoPosicion posicion = basedatos.obtenerPosicion();
+		sistema.setPosicion(posicion);
+		
+		
 		log.debug ("Posicion recibida: " + posicion.cod_instruccion + " lat: " + posicion.latitud + " long: " + posicion.longitud);
-		
-		
+			
 		// C/Wisteria 
 		double long_casa = -3.9254872000000205;
 		double lat_casa = 40.51844359999999;
@@ -90,6 +92,8 @@ public class PanelActuador extends TimerTask {
 		
 		log.debug ("Distancia: " + distancia);
 		log.debug("FIN PanelActuador");
+		
+		
 
 	}
 }

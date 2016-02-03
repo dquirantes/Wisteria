@@ -56,13 +56,16 @@ class DistanceCalculator
 		double long_casa = -3.9254872000000205;
 		double lat_casa = 40.51844359999999;
 		
- 
+		//Recibido
+		double long_e = -3.9260249;
+		double lat_e =  40.516566499999996;
 		
 		System.out.println(distance(lat_casa, long_casa, lat_a, long_a, "K") + " Kilometers\n");
 		System.out.println(distance(lat_casa, long_casa, lat_b, long_b, "K") + " Kilometers\n");
 		System.out.println(distance(lat_casa, long_casa, lat_c, long_c, "K") + " Kilometers\n");
 		System.out.println(distance(lat_casa, long_casa, lat_d, long_d, "K") + " Kilometers\n");
 
+		System.out.println(distance(lat_casa, long_casa, lat_e, long_e, "K") + " Kilometers\n");
 		
 		/*System.out.println(distance(32.9697, -96.80322, 29.46786, -98.53506, "M") + " Miles\n");
 		System.out.println(distance(32.9697, -96.80322, 29.46786, -98.53506, "K") + " Kilometers\n");		
