@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class Configuracion {
 
 	private static final Logger log = Logger.getLogger("Dameon");
-	
+
 	private String programa_abrir;
 	private String programa_cerrar;
 	private String programa_sensor;
@@ -18,9 +18,9 @@ public class Configuracion {
 	private String programa_placa;
 	private String url_tiempo;
 
-	
+
 	private String fichero_temporal;
-	
+
 	private String bd_name;
 	private String bd_servidor;
 	private String bd_puerto;
@@ -35,15 +35,15 @@ public class Configuracion {
 	private String correo_host;
 	private String correo_puerto;
 	private String correo_asunto;
-	
+
 
 	private String gpio_salon;
 	private String gpio_dormitorio;
 	private String gpio_habitacion1;
 	private String gpio_habitacion2;
-	
+
 	private float tempMaximaPlaca;
-	
+
 	private long tActuador;
 	private long tSensor;	
 	private long tExterno;
@@ -51,14 +51,17 @@ public class Configuracion {
 	private long tRegistro;
 	private long tRegistroWeb;
 	private long tNotificaciones;
-	
+
 	private float tmp_Margen;
-	
+
 	private String fichero_web;
-	
+
 	private int puerto_Web;
-	
-	
+
+	private double latitud_casa;
+	private double longitud_casa;
+
+
 	public Configuracion(String pathProperties) {
 
 		try
@@ -72,12 +75,12 @@ public class Configuracion {
 			programa_sensor = prop.getProperty("programa_sensor");
 			programa_notificaciones = prop.getProperty("programa_notificaciones");
 			programa_placa = prop.getProperty("programa_placa");
-			
-			
+
+
 			url_tiempo = prop.getProperty("url_tiempo");
 
 			fichero_temporal = prop.getProperty("fichero_temporal");
-						
+
 			bd_name = prop.getProperty("bd_name");
 			bd_servidor = prop.getProperty("bd_servidor");
 			bd_puerto = prop.getProperty("bd_puerto");
@@ -92,17 +95,17 @@ public class Configuracion {
 			correo_host = prop.getProperty("correo_host");			
 			correo_puerto = prop.getProperty("correo_puerto");			
 			correo_asunto = prop.getProperty("correo_asunto");			
-			
-			
+
+
 			gpio_salon = prop.getProperty("gpio_salon");
 			gpio_dormitorio = prop.getProperty("gpio_dormitorio");
 			gpio_habitacion1 = prop.getProperty("gpio_habitacion1");
 			gpio_habitacion2 = prop.getProperty("gpio_habitacion2");
-			
+
 			tempMaximaPlaca = Float.parseFloat(prop.getProperty("tempMaximaPlaca"));
 			tmp_Margen = Float.parseFloat(prop.getProperty("tmp_Margen"));
-			
-			
+
+
 			tActuador= Long.parseLong(prop.getProperty("tActuador"));
 			tSensor= Long.parseLong(prop.getProperty("tSensor"));
 			tExterno= Long.parseLong(prop.getProperty("tExterno"));
@@ -110,12 +113,15 @@ public class Configuracion {
 			tRegistro= Long.parseLong(prop.getProperty("tRegistro"));
 			tRegistroWeb= Long.parseLong(prop.getProperty("tRegistroWeb"));
 			tNotificaciones= Long.parseLong(prop.getProperty("tNotificaciones"));
-			
-			
+
+
 			fichero_web = prop.getProperty("fichero_web");
 			puerto_Web= Integer.parseInt(prop.getProperty("puerto_Web"));
-			
-			
+
+			latitud_casa= Double.parseDouble(prop.getProperty("latitud_casa"));
+			longitud_casa= Double.parseDouble(prop.getProperty("longitud_casa"));
+
+
 		}catch (Exception e)
 		{
 			log.error ("Fallo en la configuración. Revise el fichero: " + pathProperties);
@@ -130,7 +136,7 @@ public class Configuracion {
 	{
 		return enviarCorreo;
 	}
-	
+
 	public Float gettmp_Margen()
 	{
 		return tmp_Margen;
@@ -144,7 +150,7 @@ public class Configuracion {
 	{
 		return tSensor;
 	}
-	
+
 	public long gettExterno()
 	{
 		return tExterno;
@@ -154,22 +160,22 @@ public class Configuracion {
 	{
 		return tBucle;
 	}
-	
+
 	public long gettNotificaciones()
 	{
 		return tNotificaciones;
 	}
-	
+
 	public long gettRegistro()
 	{
 		return tRegistro;
 	}
-	
+
 	public long gettRegistroWeb()
 	{
 		return tRegistroWeb;
 	}
-	
+
 	public Float get_tempMaximaPlaca()
 	{
 		return tempMaximaPlaca;
@@ -178,56 +184,56 @@ public class Configuracion {
 	{
 		return gpio_salon;
 	}
-	
+
 	public String get_Gpio_Dormitorio()
 	{
 		return gpio_dormitorio;
 	}
-	
+
 	public String get_Gpio_habitacion1()
 	{
 		return gpio_habitacion1;
 	}
-	
+
 
 	public String get_Gpio_habitacion2()
 	{
 		return gpio_habitacion2;
 	}
 
-	
+
 	public String getProgramaNotificaciones()
 	{
 		return this.programa_notificaciones;
 	}
-	
+
 	public String getCorrreoAsunto()
 	{
 		return correo_asunto;
 	}
-	
+
 	public String getCorrreoTo()
 	{
 		return correo_to;
 	}
-	
+
 	public String getCorrreoFrom()
 	{
 		return correo_from;
 	}
-	
 
-	
+
+
 	public String getCorrreoUsuario()
 	{
 		return correo_usuario;
 	}
-	
+
 	public String getCorrreoPuerto()
 	{
 		return correo_puerto;
 	}	
-	
+
 	public String getCorrreoPassword()
 	{
 		return correo_password;
@@ -256,12 +262,12 @@ public class Configuracion {
 	{
 		return url_tiempo;	
 	}
-	
+
 	public String getBDPassword()
 	{
 		return bd_password;		
 	}
-	
+
 	public String getBDUsuario()
 	{
 		return bd_usuario;		
@@ -287,7 +293,7 @@ public class Configuracion {
 	{
 		return fichero_temporal;		
 	}
-	
+
 	public String getProgramaPlaca()
 	{
 		return programa_placa;
@@ -301,6 +307,15 @@ public class Configuracion {
 	{
 		return puerto_Web; 
 	}
+
+	public double getLontigudCasa()
+	{
+		return this.longitud_casa;
+	}
+
+	public double getLatitudCasa()
+	{
+		return this.latitud_casa;
+	}
+
 }
-
-

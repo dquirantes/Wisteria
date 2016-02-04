@@ -5,19 +5,19 @@ import org.apache.log4j.Logger;
 import sistema.BaseDatos;
 
 
+
 public class Registro extends TimerTask {
 	private static final Logger log = Logger.getLogger("Dameon");
 
 
 	private SistemaDomotico sistema;
 	private BaseDatos basedatos;
-
-
+	
 
 	public Registro (SistemaDomotico sistema, BaseDatos basedatos)
 	{
 		this.sistema = sistema;
-		this.basedatos = basedatos;
+		this.basedatos = basedatos;	
 	}
 
 	@Override

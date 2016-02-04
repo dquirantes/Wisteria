@@ -102,7 +102,7 @@ public class Daemon {
 		timer_externa.scheduleAtFixedRate(temp_externa , 0, configuracion.gettExterno()*1000);
 		
 		
-		PanelActuador actuador = new PanelActuador(sistema, basedatos);  
+		PanelActuador actuador = new PanelActuador(sistema, basedatos, configuracion);  
 		Timer timer_actuador = new Timer(true);       
 		timer_actuador.scheduleAtFixedRate(actuador , 0, configuracion.gettActuador() * 1000);
 		

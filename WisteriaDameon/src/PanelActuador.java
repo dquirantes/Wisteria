@@ -3,6 +3,7 @@ import java.util.TimerTask;
 import org.apache.log4j.Logger;
 
 import sistema.BaseDatos;
+import sistema.Configuracion;
 import sistema.TipoPosicion;
 
 
@@ -15,11 +16,13 @@ public class PanelActuador extends TimerTask {
 
 	private int codigo_instruccion = 0;
 
+	private Configuracion configuracion;
 
-	public PanelActuador (SistemaDomotico sistema, BaseDatos basedatos)
+	public PanelActuador (SistemaDomotico sistema, BaseDatos basedatos, Configuracion config)
 	{
 		this.sistema = sistema;
 		this.basedatos = basedatos;
+		this.configuracion = config;
 	}
 
 	@Override
@@ -30,8 +33,8 @@ public class PanelActuador extends TimerTask {
 		String res;		
 
 		//TODO: comprobar esto antes de subir
-		res = basedatos.obtenerOrden();		
-		//res = "CLIMATIZADOR;10;5;true;DORMITORIO";
+		//res = basedatos.obtenerOrden();		
+		res = "CLIMATIZADOR;10;5;true;DORMITORIO";
 
 		if (res=="")
 		{
@@ -82,13 +85,9 @@ public class PanelActuador extends TimerTask {
 		sistema.setPosicion(posicion);
 		
 		
-		log.debug ("Posicion recibida: " + posicion.cod_instruccion + " lat: " + posicion.latitud + " long: " + posicion.longitud);
-			
-		// C/Wisteria 
-		double long_casa = -3.9254872000000205;
-		double lat_casa = 40.51844359999999;
+		log.debug ("Posicion recibida: " + posicion.cod_instruccion + " lat: " + posicion.latitud + " long: " + posicion.longitud);			
 		
-		double distancia = DistanceCalculator.distance(lat_casa, long_casa, posicion.latitud, posicion.longitud, "K");
+		double distancia = DistanceCalculator.distance(configuracion.getLatitudCasa(), configuracion.getLontigudCasa(), posicion.latitud, posicion.longitud, "K");
 		
 		log.debug ("Distancia: " + distancia);
 		log.debug("FIN PanelActuador");
