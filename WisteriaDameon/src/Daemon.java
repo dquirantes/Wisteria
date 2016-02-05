@@ -79,6 +79,9 @@ public class Daemon {
 		Timer timer_notificaciones = new Timer(true);
 		timer_notificaciones.scheduleAtFixedRate(notificaciones_info, 30000, configuracion.gettNotificaciones()* 1000);
 
+		GenerarJSON generadorjson = new GenerarJSON (sistema); 
+		Timer timer_json = new Timer(true);
+		//timer_json.scheduleAtFixedRate(generadorjson, 0, configuracion.gettNotificaciones()* 1000);
 		
 		Servidor servidor = new Servidor(sistema, notificaciones,configuracion, basedatos);
 		servidor.start();
