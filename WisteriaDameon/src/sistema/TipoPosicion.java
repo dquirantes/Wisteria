@@ -1,6 +1,5 @@
 package sistema;
 
-import org.json.JSONObject;
 
 public class TipoPosicion 
 {

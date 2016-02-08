@@ -75,13 +75,16 @@ public class Daemon {
 
 		EnviarNotificaciones notificaciones = new EnviarNotificaciones (configuracion.getProgramaNotificaciones());
 		notificaciones.enviar("Arrancando Sistema Domotico");
+		
 		NotificacionesInformacion notificaciones_info = new NotificacionesInformacion (notificaciones,sistema);
 		Timer timer_notificaciones = new Timer(true);
 		timer_notificaciones.scheduleAtFixedRate(notificaciones_info, 30000, configuracion.gettNotificaciones()* 1000);
 
-		GenerarJSON generadorjson = new GenerarJSON (sistema); 
-		Timer timer_json = new Timer(true);
-		//timer_json.scheduleAtFixedRate(generadorjson, 0, configuracion.gettNotificaciones()* 1000);
+		
+		GenerarXML generarxml = new GenerarXML (sistema, configuracion.getFicheroEstado()); 
+		Timer timer_xml = new Timer(true);
+		timer_xml.scheduleAtFixedRate(generarxml, 0, configuracion.getTestado()* 1000);
+		
 		
 		Servidor servidor = new Servidor(sistema, notificaciones,configuracion, basedatos);
 		servidor.start();

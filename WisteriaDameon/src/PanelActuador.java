@@ -33,8 +33,8 @@ public class PanelActuador extends TimerTask {
 		String res;		
 
 		//TODO: comprobar esto antes de subir
-		//res = basedatos.obtenerOrden();		
-		res = "CLIMATIZADOR;10;5;true;DORMITORIO";
+		res = basedatos.obtenerOrden();		
+		//res = "CLIMATIZADOR;10;5;true;DORMITORIO";
 
 		if (res=="")
 		{
@@ -87,7 +87,7 @@ public class PanelActuador extends TimerTask {
 		
 		log.debug ("Posicion recibida: " + posicion.cod_instruccion + " lat: " + posicion.latitud + " long: " + posicion.longitud);			
 		
-		double distancia = DistanceCalculator.distance(configuracion.getLatitudCasa(), configuracion.getLontigudCasa(), posicion.latitud, posicion.longitud, "K");
+		double distancia = CalcularPosicion.distance(configuracion.getLatitudCasa(), configuracion.getLontigudCasa(), posicion.latitud, posicion.longitud, "K");
 		
 		log.debug ("Distancia: " + distancia);
 		log.debug("FIN PanelActuador");

@@ -51,6 +51,7 @@ public class Configuracion {
 	private long tRegistro;
 	private long tRegistroWeb;
 	private long tNotificaciones;
+	private long tEstado;
 
 	private float tmp_Margen;
 
@@ -61,6 +62,7 @@ public class Configuracion {
 	private double latitud_casa;
 	private double longitud_casa;
 
+	private String ficheroEstado;
 
 	public Configuracion(String pathProperties) {
 
@@ -113,13 +115,17 @@ public class Configuracion {
 			tRegistro= Long.parseLong(prop.getProperty("tRegistro"));
 			tRegistroWeb= Long.parseLong(prop.getProperty("tRegistroWeb"));
 			tNotificaciones= Long.parseLong(prop.getProperty("tNotificaciones"));
-
+			tEstado= Long.parseLong(prop.getProperty("tEstado"));
+			
 
 			fichero_web = prop.getProperty("fichero_web");
 			puerto_Web= Integer.parseInt(prop.getProperty("puerto_Web"));
 
 			latitud_casa= Double.parseDouble(prop.getProperty("latitud_casa"));
 			longitud_casa= Double.parseDouble(prop.getProperty("longitud_casa"));
+
+			ficheroEstado= prop.getProperty("ficheroEstado");
+
 
 
 		}catch (Exception e)
@@ -318,4 +324,15 @@ public class Configuracion {
 		return this.latitud_casa;
 	}
 
+	public String getFicheroEstado()
+	{
+		return this.ficheroEstado;
+	}
+	
+	public long getTestado()
+	{
+		return this.tEstado;
+	}
+	
 }
+

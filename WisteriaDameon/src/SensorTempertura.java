@@ -105,7 +105,7 @@ public class SensorTempertura extends TimerTask{
 		}
 
 
-	/*	try
+		/*try
 		{
 
 			log.debug ("Conectado ESP8266 habitacion1");
