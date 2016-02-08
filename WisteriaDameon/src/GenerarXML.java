@@ -90,7 +90,7 @@ public class GenerarXML extends TimerTask {
 
 			Element itemNode3H = document.createElement("Humedad"); 
 			itemNode3.appendChild(itemNode3H);
-			itemNode3H.appendChild(document.createTextNode(sistema.getTemperatura_habitacion1()+""));
+			itemNode3H.appendChild(document.createTextNode(sistema.getHumedad_Habitacion1()+""));
 
 
 			Element itemNode4 = document.createElement("Habitacion2"); 
@@ -103,7 +103,7 @@ public class GenerarXML extends TimerTask {
 
 			Element itemNode4H = document.createElement("Humedad"); 
 			itemNode4.appendChild(itemNode4H);
-			itemNode4H.appendChild(document.createTextNode(sistema.getTemperatura_habitacion2()+""));
+			itemNode4H.appendChild(document.createTextNode(sistema.getHumedad_Habitacion2()+""));
 
 
 
