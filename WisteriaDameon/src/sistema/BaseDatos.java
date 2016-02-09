@@ -226,7 +226,7 @@ public class BaseDatos {
 	{
 		//String res = "";
 
-		TipoPosicion posicion = new TipoPosicion (); 
+		TipoPosicion posicion = null; 
 
 		log.debug("obtenerOrden");
 		try
@@ -239,10 +239,12 @@ public class BaseDatos {
 			if (rs.next()) 
 			{ 				 
 
-				posicion.cod_instruccion = rs.getInt("COD_INSTRUCCION");
-				posicion.latitud = rs.getDouble("LATITUD");
-				posicion.longitud = rs.getDouble("LONGITUD");
+										
+				
+				posicion = new TipoPosicion (rs.getInt("COD_INSTRUCCION"),rs.getDouble("LATITUD"),rs.getDouble("LONGITUD"));
+				
 				//codigo_modo = Integer.parseInt(rs.getString(3));
+				
 				
 				//res = rs.getString(1) + ";" +rs.getString(2) + ";" +rs.getString(4) + ";" + rs.getBoolean(5) + ";" + rs.getString(6);										
 			}else

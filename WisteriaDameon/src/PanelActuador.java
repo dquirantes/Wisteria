@@ -15,6 +15,7 @@ public class PanelActuador extends TimerTask {
 	private BaseDatos basedatos;
 
 	private int codigo_instruccion = 0;
+	private int instruccion_posicion = 0;
 
 	private Configuracion configuracion;
 
@@ -51,7 +52,7 @@ public class PanelActuador extends TimerTask {
 				int codigo_instruccion_nuevo= Integer.parseInt(partes[2]);
 				float temp = Float.parseFloat(partes[1]);
 
-			
+
 
 				if (codigo_instruccion_nuevo!=codigo_instruccion)
 				{
@@ -60,7 +61,7 @@ public class PanelActuador extends TimerTask {
 					sistema.setEnviarNotificaciones(Boolean.parseBoolean(partes[3]));
 					sistema.set_opcionesModo(OpcionesModo.valueOf(partes[4]));
 
-					
+
 					log.debug("Se ha recibido actualizacion " + codigo_instruccion_nuevo);
 					codigo_instruccion = codigo_instruccion_nuevo;
 					sistema.setAlcanzoTemperatura(false);
@@ -76,23 +77,29 @@ public class PanelActuador extends TimerTask {
 				log.error("Exception actuador");
 				sistema.setErrorSistema(ErroresSistema.ACTUADOR);
 			}
-			
+
 
 
 		}
 
+		//TODO: comprobar esto antes de subir
 		TipoPosicion posicion = basedatos.obtenerPosicion();
-		sistema.setPosicion(posicion);
-		
-		
-		log.debug ("Posicion recibida: " + posicion.cod_instruccion + " lat: " + posicion.latitud + " long: " + posicion.longitud);			
-		
-		double distancia = CalcularPosicion.distance(configuracion.getLatitudCasa(), configuracion.getLontigudCasa(), posicion.latitud, posicion.longitud, "K");
-		
-		log.debug ("Distancia: " + distancia);
+		//TipoPosicion posicion = new TipoPosicion(1024,2,3);
+		if (posicion.getInstruccion()!=instruccion_posicion)
+		{
+			sistema.setPosicion(posicion);
+			log.debug ("Actualización de la posicion recibida: " + posicion);			
+			double distancia = CalcularPosicion.distance(configuracion.getLatitudCasa(), configuracion.getLontigudCasa(), posicion.getLatitud(), posicion.getLongitud(), "K");
+
+			log.debug ("Distancia: " + distancia);
+			
+			instruccion_posicion=posicion.getInstruccion();
+		}
+
+
 		log.debug("FIN PanelActuador");
-		
-		
+
+
 
 	}
 }

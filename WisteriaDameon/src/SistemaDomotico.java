@@ -279,8 +279,9 @@ public class SistemaDomotico {
 			res += "Modo: " + modo + " - " ;
 		
 		
-		res += "Caledera: " + rele;
+		res += "Caledera: " + rele + " - ";
 
+		res += "Pos: " + posicion;
 		return res;
 
 	}
