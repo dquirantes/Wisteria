@@ -25,7 +25,7 @@ public class SensorTempertura extends TimerTask{
 
 	private int errores1 = 0;
 	private int errores2 = 0;
-	//private int errores3 = 0;
+	private int errores3 = 0;
 	private int errores4 = 0;
 	private int errores5 = 0;
 
@@ -51,8 +51,8 @@ public class SensorTempertura extends TimerTask{
 		float temp;
 		float humedad_dormitorio;
 		float temp_dormitorio;
-		/*float humedad_habitacion1;
-		float temp_habitacion1;*/
+		float humedad_habitacion1;
+		float temp_habitacion1;
 		float humedad_habitacion2;
 		float temp_habitacion2;				
 
@@ -105,7 +105,7 @@ public class SensorTempertura extends TimerTask{
 		}
 
 
-		/*try
+		try
 		{
 
 			log.debug ("Conectado ESP8266 habitacion1");
@@ -116,7 +116,7 @@ public class SensorTempertura extends TimerTask{
 					new InputStreamReader(con.getInputStream()));
 
 
-			log.debug ("Recibido ESP8266");
+			log.debug ("Recibido ESP8266 habitacion1");
 			
 			if ((linea = in.readLine()) != null) 
 			{
@@ -134,8 +134,8 @@ public class SensorTempertura extends TimerTask{
 			}
 		}catch (Exception e)
 		{
-			//e.printStackTrace();
-			//errores3++;
+			e.printStackTrace();
+			errores3++;
 
 
 			log.error("Fallo sensor habitación1 ESP8266");
@@ -143,7 +143,7 @@ public class SensorTempertura extends TimerTask{
 			// No es necesario que funcione ese sensor
 			//if (errores3>ERRORES_MAXIMOS)
 				//sistema.setErrorSistema(ErroresSistema.SENSORES);
-		}*/
+		}
 
 
 
@@ -160,7 +160,7 @@ public class SensorTempertura extends TimerTask{
 
 			if ((linea = in.readLine()) != null) 
 			{
-				log.debug ("Recibido: " + linea);
+				log.debug ("Recibido ESP8266 habitacion2");
 				partes = linea.split(",");
 
 				humedad_habitacion2 = Float.parseFloat(partes[1]);
