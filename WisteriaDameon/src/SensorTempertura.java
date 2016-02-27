@@ -129,7 +129,7 @@ public class SensorTempertura extends TimerTask{
 				sistema.setTemp_habitacion1(temp_habitacion1);
 				sistema.setHumedad_habitacion1(humedad_habitacion1);
 
-				//errores3=0;
+				errores3=0;
 
 			}
 		}catch (Exception e)
@@ -140,9 +140,13 @@ public class SensorTempertura extends TimerTask{
 
 			log.error("Fallo sensor habitación1 ESP8266");
 
-			// No es necesario que funcione ese sensor
-			//if (errores3>ERRORES_MAXIMOS)
-				//sistema.setErrorSistema(ErroresSistema.SENSORES);
+			// 
+			if (errores3>ERRORES_MAXIMOS)
+			{
+				sistema.setTemp_habitacion1(0f);
+				sistema.setHumedad_habitacion1(0f);
+			}
+
 		}
 
 
