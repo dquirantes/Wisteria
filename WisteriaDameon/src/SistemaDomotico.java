@@ -1,4 +1,3 @@
-import sistema.TipoPosicion;
 
 enum EstadoRele {ABIERTO, CERRADO};
 enum ModoSistema{ON_FIJO, OFF, CLIMATIZADOR};
@@ -11,10 +10,10 @@ public class SistemaDomotico {
 
 
 
-	private float temp;
+	private float temp_salon;
 	private Double temp_ext;	
 	private float temp_climatizador;
-	private float humedad;	
+	private float humedad_salon;	
 	private EstadoRele rele = EstadoRele.CERRADO;
 	private ModoSistema modo;
 	private OpcionesModo opciones_modo;
@@ -35,17 +34,9 @@ public class SistemaDomotico {
 	
 	private boolean enviarNotificaciones;
 	
-	private TipoPosicion posicion;
 	
 	
-	public TipoPosicion getPosicion()
-	{
-		return posicion;
-	}
-	public void setPosicion(TipoPosicion posicion)
-	{
-		this.posicion= posicion;		
-	}
+
 	
 	public void setEnviarNotificaciones(boolean enviar)
 	{
@@ -86,7 +77,7 @@ public class SistemaDomotico {
 	}
 	public float getHumedad()
 	{
-		return humedad;
+		return humedad_salon;
 	}
 	public float getHumedad_dormitorio()
 	{
@@ -112,7 +103,7 @@ public class SistemaDomotico {
 
 	public float getTemperatura()
 	{
-		return temp;
+		return temp_salon;
 	}
 	public float getTemperatura_habitacion1()
 	{
@@ -166,7 +157,7 @@ public class SistemaDomotico {
 	}
 	public void setTemp (Float temp)
 	{
-		this.temp = temp;
+		this.temp_salon = temp;
 	}
 
 	public void setTempdormitorio (Float temp)
@@ -176,7 +167,7 @@ public class SistemaDomotico {
 
 	public void setHumedad (Float humedad)
 	{
-		this.humedad = humedad;
+		this.humedad_salon = humedad;
 	}
 
 	public void setHumedaddormitorio (Float humedad)
@@ -204,15 +195,40 @@ public class SistemaDomotico {
 	public float calcularTemperaturaMedia()
 	{
 		float res = 0;		
+		int sensores=0;
+		
+		if (temp_salon!=0)
+		{
+			sensores++;
+			res += temp_salon;
+		}
+		
+		if (temp_dormitorio!=0)
+		{
+			sensores++;
+			res += temp_dormitorio;
+		}
 
-		res = (temp+temp_dormitorio+temp_habitacion1+temp_habitacion2)/4;
-		return res;		 									
+		if (temp_habitacion1!=0)
+		{
+			sensores++;
+			res += temp_habitacion1;
+		}
+		
+		if (temp_habitacion2!=0)
+		{
+			sensores++;
+			res += temp_habitacion2;
+		}
+		
+
+		return (res/sensores);		 									
 	}
 	
 	public float calcularTemperaturaMinima()
 	{
 		float res = 0;		
-		float[] datos = {temp,temp_dormitorio,temp_habitacion1,temp_habitacion2};
+		float[] datos = {temp_salon,temp_dormitorio,temp_habitacion1,temp_habitacion2};
 		
 		res = datos[0];
 		for (int i=0;i<datos.length;i++)
@@ -228,7 +244,7 @@ public class SistemaDomotico {
 	public float calcularTemperaturaMaxima()
 	{
 		float res = 0;		
-		float[] datos = {temp,temp_dormitorio,temp_habitacion1,temp_habitacion2};
+		float[] datos = {temp_salon,temp_dormitorio,temp_habitacion1,temp_habitacion2};
 		
 		res = datos[0];
 		for (int i=0;i<datos.length;i++)
@@ -265,30 +281,30 @@ public class SistemaDomotico {
 	
 	public String toString ()
 	{
-		String res = "Salón: " + temp + "º " + humedad + "% HR -  " ;
+		String res = "Salón: " + temp_salon + "º " + humedad_salon + "% HR -  " ;
 		res += "Dormitorio: " + temp_dormitorio+ "º " + humedad_dormitorio + "% HR -  " ;
 		res += "Habitacion1: " + temp_habitacion1+ "º " + humedad_habitacion1 + "% HR -  " ;
 		res += "Habitacion2: " + temp_habitacion2+ "º " + humedad_habitacion2+ "% HR -  " ;
 		res += "Externa: " + temp_ext + "º -  " ;
 		res += "Raspberry: " + temp_raspi + "º -  " ;
-		
-		
+	
 		if (modo.equals(ModoSistema.CLIMATIZADOR))
 			res += "Modo: " + modo + " (" + opciones_modo+ ") "+ temp_climatizador + "º -  " ;			
 		else
 			res += "Modo: " + modo + " - " ;
 		
 		
-		res += "Caledera: " + rele + " - ";
+		res += "Caldera: " + rele + " - ";
 
-		res += "Pos: " + posicion;
+		res += "Media: " + calcularTemperaturaMedia();
+		
 		return res;
 
 	}
 
 	public String toString_info ()
 	{
-		String res = "Salón: " + temp + "º - " ;		
+		String res = "Salón: " + temp_salon + "º - " ;		
 		res += "Dormitorio: " + temp_dormitorio+ "º - " ;
 		
 		if (temp_habitacion1!=0)
@@ -307,6 +323,7 @@ public class SistemaDomotico {
 			res += "Modo: " + modo + " - " ;
 		
 		res += "Caldera: " + rele;
+
 
 		return res;
 

@@ -58,13 +58,13 @@ public class BaseDatos {
 
 
 
-			
+
 			// Recorremos el resultado, mientras haya registros para leer, y escribimos el resultado en pantalla. 
 			if (rs.next()) 
 			{ 				 
 
 				codigo_modo = Integer.parseInt(rs.getString(3));
-				
+
 				res = rs.getString(1) + ";" +rs.getString(2) + ";" +rs.getString(4) + ";" + rs.getBoolean(5) + ";" + rs.getString(6);										
 			}else
 				log.debug("No se ha recibido nada de la BBDD");
@@ -145,15 +145,15 @@ public class BaseDatos {
 
 
 	}
-	
+
 	public Boolean insertarSistema(float temperatura, float humedad, Double tempertura_externa, String rele, float temperatura_climatizacion, float temperatura_habitacion, float humedad_habitacion, float temperatura_habitacion1, float humedad_habitacion1,float temperatura_habitacion2, float humedad_habitacion2, float temp_rapsberry, String opciones_modo) 
 	{
 		String query = "INSERT INTO SISTEMA (FECHA,COD_MODO,RELE,TEMP_SALON,HUMEDAD_SALON,TEMP_EXTERNA,TEMP_CLIMATIZADOR,TEMP_DORMITORIO, HUMEDAD_DORMITORIO,TEMP_HABITACION1, HUMEDAD_HABITACION1,TEMP_HABITACION2, HUMEDAD_HABITACION2,TEMP_RASPI,OPCIONES_MODO) values (now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		
-		
+
+
 		try
 		{
-				
+
 			PreparedStatement preparedStmt = cadena_conexion.prepareStatement(query);
 
 			preparedStmt.setInt(1, codigo_modo);
@@ -164,7 +164,7 @@ public class BaseDatos {
 			preparedStmt.setFloat(6, temperatura_climatizacion);
 			preparedStmt.setFloat(7, temperatura_habitacion);
 			preparedStmt.setFloat(8, humedad_habitacion);
-			
+
 			preparedStmt.setFloat(9, temperatura_habitacion1);
 			preparedStmt.setFloat(10, humedad_habitacion1);
 			preparedStmt.setFloat(11, temperatura_habitacion2);
@@ -172,13 +172,13 @@ public class BaseDatos {
 
 			preparedStmt.setFloat(13, temp_rapsberry);
 			preparedStmt.setString(14, opciones_modo);
-			
+
 			preparedStmt.execute();
 
-			
+
 			log.debug ("Insertada informacion en la BBDD correctamente");			
-					
-			
+
+
 		}catch (Exception e )
 		{
 			log.error ("Fallo actualizar sistema BBDD " + e);
@@ -193,22 +193,22 @@ public class BaseDatos {
 	{
 		String query = "INSERT INTO INSTRUCCION (COD_MODO,TEMPERATURA,USUARIO,FECHA,NOTIFICAR,OPCIONES_MODO)"
 				+ "values (?,?,?,now(),?,?)";
-				
+
 		try
 		{
-				
+
 			PreparedStatement preparedStmt = cadena_conexion.prepareStatement(query);
 			preparedStmt.setInt(1, codigo_modo);
 			preparedStmt.setFloat(2, temperatura);
 			preparedStmt.setString(3, usuario);						
 			preparedStmt.setBoolean(4,notificar);
 			preparedStmt.setString(5, opciones_modo);
-			
+
 			preparedStmt.execute();
-			
+
 			log.debug ("Insertada informacion en la BBDD correctamente");			
-					
-			
+
+
 		}catch (Exception e )
 		{
 			log.error ("Fallo insertarInstruccion " + e);
@@ -220,46 +220,5 @@ public class BaseDatos {
 		return true;
 
 	}
-	
-	
-	public TipoPosicion obtenerPosicion()
-	{
-		//String res = "";
 
-		TipoPosicion posicion = null; 
-
-		log.debug("obtenerOrden");
-		try
-		{
-			log.debug ("BBDD obtenerPosicion");
-			Statement s = cadena_conexion.createStatement(); 
-			ResultSet rs = s.executeQuery ("SELECT COD_INSTRUCCION, LATITUD, LONGITUD FROM LOCALIZACION order by cod_instruccion desc limit 1");
-
-		
-			if (rs.next()) 
-			{ 				 
-
-										
-				
-				posicion = new TipoPosicion (rs.getInt("COD_INSTRUCCION"),rs.getDouble("LATITUD"),rs.getDouble("LONGITUD"));
-				
-				//codigo_modo = Integer.parseInt(rs.getString(3));
-				
-				
-				//res = rs.getString(1) + ";" +rs.getString(2) + ";" +rs.getString(4) + ";" + rs.getBoolean(5) + ";" + rs.getString(6);										
-			}else
-				log.debug("No se ha recibido nada de la BBDD");
-
-
-		} catch (Exception e)
-		{			
-			log.error("Fallo obtener Posicion: " + e);			
-		}
-
-
-		log.debug("Fin obtener posicion");
-		return posicion;
-
-
-	}
 }

@@ -133,16 +133,12 @@ public class GenerarXML extends TimerTask {
 			raiz.appendChild(itemNode10);
 			itemNode10.appendChild(document.createTextNode(sistema.getTemperatura_raspi()+""));
 
-			Element itemNode11 = document.createElement("Posición"); 
+			Element itemNode11 = document.createElement("TemperaturaMedia"); 
 			raiz.appendChild(itemNode11);
-
-			Element itemNode12 = document.createElement("Latitud"); 
-			itemNode11.appendChild(itemNode12);
-			itemNode12.appendChild(document.createTextNode(sistema.getPosicion().getLatitud() + ""));
-
-			Element itemNode13 = document.createElement("Longitud"); 
-			itemNode11.appendChild(itemNode13);
-			itemNode13.appendChild(document.createTextNode(sistema.getPosicion().getLongitud()+""));
+			itemNode11.appendChild(document.createTextNode(sistema.calcularTemperaturaMedia()+""));			
+ 
+			
+			
 
 
 			Date date= new java.util.Date();

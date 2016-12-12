@@ -21,9 +21,9 @@ public class Daemon {
 	
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 
-		// DQG 25/08/2016 prueba DQG
 		String path_aplicacion = System.getProperty("path_aplicacion");		
 		String path_configuracion =path_aplicacion + "/cfg/daemon.cfg"; 		
 		String ruta_log4j = path_aplicacion + "/cfg/log4j.properties";
@@ -39,7 +39,6 @@ public class Daemon {
 
 
 		log.info("Arrancando Wisteria Daemon David");
-
 
 		
 		log.info ("script abrir: " + configuracion.getProgramaAbrir());

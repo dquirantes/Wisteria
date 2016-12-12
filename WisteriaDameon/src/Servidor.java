@@ -15,6 +15,8 @@ class Servidor extends Thread
 	static final String DORMITORIO = "dormitorio";
 	static final String HABITACION1 = "habitacion1";
 	static final String HABITACION2 = "habitacion2";
+	static final String MEDIA = "media";
+	
 	static final String RASPBERRY = "raspberry";
 	static final String EXTERNA = "externa";
 	static final String SALIR = "salir";
@@ -104,6 +106,10 @@ class Servidor extends Thread
 				else if (recibido.toLowerCase().equals(HABITACION2))
 				{				
 					respuesta = "Habitación2: " + sistema.getTemperatura_habitacion2() + "º";										
+				}
+				else if (recibido.toLowerCase().equals(MEDIA))
+				{				
+					respuesta = "Media: " + sistema.calcularTemperaturaMedia() + "º";										
 				}
 				else if (recibido.toLowerCase().equals(RASPBERRY))
 				{					
