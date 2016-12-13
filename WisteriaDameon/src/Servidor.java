@@ -121,15 +121,15 @@ class Servidor extends Thread
 				}
 				else if (recibido.toLowerCase().equals(CALEFACCION_DORMITORIO))
 				{					
-					basedatos.insertarInstruccion(1, 21, "david", true, "DORMITORIO");															
+					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), "david", sistema.getEnviarNotificaciones(), "DORMITORIO");															
 				}
 				else if (recibido.toLowerCase().equals(CALEFACCION_SALON))
 				{					
-					basedatos.insertarInstruccion(1, 20.5f, "david", true, "SALON");																
+					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), "david", sistema.getEnviarNotificaciones(), "SALON");																
 				}
 				else if (recibido.toLowerCase().equals(CALEFACCION_APAGAR))
 				{					
-					basedatos.insertarInstruccion(2, 21, "david", true, "SALON");									
+					basedatos.insertarInstruccion(2, sistema.getTemperatura_Climatizador(), "david", sistema.getEnviarNotificaciones(), sistema.get_opcionesModo().toString());									
 				}
 				else if (recibido.toLowerCase().equals(NOTIFICACIONES))
 				{					
@@ -160,7 +160,7 @@ class Servidor extends Thread
 				else
 				{
 					log.error("Opción incorrecta servidor: " + recibido);
-					respuesta = "Opción incorrecta";
+					respuesta = "Opción incorrecta: '" + recibido +"'";
 				}
 
 				// Devuelve OK al cliente
@@ -173,6 +173,7 @@ class Servidor extends Thread
 			}
 		} catch( Exception e ) 
 		{
+			e.printStackTrace();
 			log.error("Error Servidor "  + e.getMessage());
 		}		
 	}

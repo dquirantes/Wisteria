@@ -34,6 +34,38 @@ public class SistemaDomotico {
 	
 	private boolean enviarNotificaciones;
 	
+	private int arranques = 0;
+	private long tiempoFuncionando = 0;
+	
+	
+	public long getTiempoFuncionando()
+	{
+		return tiempoFuncionando;
+	}
+	public void incrementarTiempoFuncionando(long tiempo)
+	{
+		tiempoFuncionando += tiempo;
+	}
+	
+	public void incializarTiempoFuncionando()
+	{
+		tiempoFuncionando=0;
+	}
+	
+	public int getArranques()
+	{
+		return arranques;
+	}
+	
+	public void aumentarArranques()
+	{
+		arranques++;
+	}
+	
+	public void inicializarArranques()
+	{
+		arranques=0;
+	}
 	
 	
 
