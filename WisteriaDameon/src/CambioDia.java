@@ -8,6 +8,7 @@ public class CambioDia  extends TimerTask {
 	
 	private static final Logger log = Logger.getLogger("Dameon");
 
+	//Hola Mundo 
 	EnviarNotificaciones notificaciones;
 	SistemaDomotico sistema;
 	
@@ -20,7 +21,7 @@ public class CambioDia  extends TimerTask {
 
 	public void run() 
 	{		
-		log.debug("Ejecutar clase de cambio de día");
+		log.debug("Ejecutar clase de cambio de dÃ­a");
 		
 		log.debug("Arranques caldera: " + sistema.getArranques());
 		notificaciones.enviar("Arranques caldera: " + sistema.getArranques());
