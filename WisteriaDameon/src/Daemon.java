@@ -135,7 +135,7 @@ public class Daemon {
 
 		//c.set(Calendar.DAY_OF_YEAR, c.get(Calendar.DAY_OF_YEAR));
 		c.set(Calendar.HOUR_OF_DAY, 23);
-		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.MINUTE, 59);
 		c.set(Calendar.SECOND, 0);
 		horaCambioDia = c.getTime();
 		Timer temporizador = new Timer();

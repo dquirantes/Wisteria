@@ -29,6 +29,8 @@ class Servidor extends Thread
 	static final String NOTIFICACIONES_SI = "notificaciones_si";
 	static final String NOTIFICACIONES_NO = "notificaciones_no";
 	
+	static final String USO = "uso";
+	
 	private static final Logger log = Logger.getLogger("Dameon");
 
 
@@ -156,6 +158,12 @@ class Servidor extends Thread
 						// Borrar el fichero temporal para salir
 						FLAG_FILE.delete();						
 					}	
+				}
+				else if (recibido.toLowerCase().equals(USO))
+				{					
+					// Convierte a horas en float
+					float tiempo_funcionando = (float)(sistema.getTiempoFuncionando()/3600000);					
+					respuesta = "Uso horas: " + tiempo_funcionando;									
 				}
 				else
 				{
