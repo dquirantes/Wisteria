@@ -180,7 +180,9 @@ public class Daemon {
 					// Cuenta de ciclos de funcionamiento
 					sistema.aumentarArranques();
 					
+					
 					ms_arranque = System.currentTimeMillis();
+					log.debug("Tiempo arranque: " + ms_arranque);
 				}
 				else if (estado_nuevo == EstadoRele.CERRADO)					
 				{
@@ -190,7 +192,14 @@ public class Daemon {
 						notificaciones.enviar("Apagar la caldera");
 					basedatos.cerrar((sistema.getTemperatura()));
 					
-					sistema.incrementarTiempoFuncionando(System.currentTimeMillis()-ms_arranque);
+					long ms_parada = System.currentTimeMillis();
+					
+					long duracion = ms_parada - ms_arranque;
+					log.debug("Tiempo parada: " + duracion);
+					
+					sistema.incrementarTiempoFuncionando(duracion);
+					
+					log.debug("Acumulado sistema: " + sistema.getTiempoFuncionando());
 				}
 
 

@@ -139,7 +139,7 @@ class Servidor extends Thread
 				}
 				else if (recibido.toLowerCase().equals(NOTIFICACIONES_SI))
 				{					
-					respuesta = "Activiar notificaciones";
+					respuesta = "Activar notificaciones";
 					sistema.setEnviarNotificaciones(true);
 				}
 				else if (recibido.toLowerCase().equals(NOTIFICACIONES_NO))
@@ -162,8 +162,8 @@ class Servidor extends Thread
 				else if (recibido.toLowerCase().equals(USO))
 				{					
 					// Convierte a horas en float
-					float tiempo_funcionando = (float)(sistema.getTiempoFuncionando()/3600000);					
-					respuesta = "Uso horas: " + tiempo_funcionando;									
+					//float tiempo_funcionando = (float)(sistema.getTiempoFuncionando()/3600000);					
+					respuesta = "Uso caldera: " + sistema.getTiempoFuncionando();									
 				}
 				else
 				{

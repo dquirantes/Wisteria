@@ -44,13 +44,13 @@ public class SistemaDomotico {
 	}
 	public void incrementarTiempoFuncionando(long tiempo)
 	{
-		tiempoFuncionando += tiempo;
+		tiempoFuncionando = tiempoFuncionando + tiempo;
 	}
 	
-	public void incializarTiempoFuncionando()
+	/*public void incializarTiempoFuncionando()
 	{
 		tiempoFuncionando=0;
-	}
+	}*/
 	
 	public int getArranques()
 	{
@@ -324,11 +324,10 @@ public class SistemaDomotico {
 			res += "Modo: " + modo + " (" + opciones_modo+ ") "+ temp_climatizador + "º -  " ;			
 		else
 			res += "Modo: " + modo + " - " ;
-		
-		
+				
 		res += "Caldera: " + rele + " - ";
-
-		res += "Media: " + calcularTemperaturaMedia();
+		res += "Media: " + calcularTemperaturaMedia() + " - ";		
+		res += "Uso: " + tiempoFuncionando;
 		
 		return res;
 
