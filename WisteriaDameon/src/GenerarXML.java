@@ -139,7 +139,7 @@ public class GenerarXML extends TimerTask {
  
 			Element itemNode12 = document.createElement("TiempoFuncionamiento"); 
 			raiz.appendChild(itemNode12);
-			itemNode11.appendChild(document.createTextNode(sistema.getTiempoFuncionando()+""));			
+			itemNode12.appendChild(document.createTextNode(sistema.getTiempoFuncionando()+""));			
  			
 			
 
