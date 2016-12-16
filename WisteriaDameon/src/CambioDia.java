@@ -25,17 +25,13 @@ public class CambioDia  extends TimerTask {
 		
 		log.debug("Arranques caldera: " + sistema.getArranques());
 		notificaciones.enviar("Arranques caldera: " + sistema.getArranques());
+			
 		
-		// Convierte a horas en float
-		float tiempo_funcionando = (float)(sistema.getTiempoFuncionando()/3600000);
-		
-		log.debug("Tiempo funcionamiento: " + tiempo_funcionando);
-		notificaciones.enviar("Tiempo funcionamiento: " + tiempo_funcionando);
+		log.debug("Tiempo funcionamiento: " + sistema.getTiempoFuncionando());
+		notificaciones.enviar("Tiempo funcionamiento: " + sistema.getTiempoFuncionando());
 		
 		
-		sistema.inicializarArranques();
-		
-					
+		sistema.inicializarArranques();							
 	}
 
 }

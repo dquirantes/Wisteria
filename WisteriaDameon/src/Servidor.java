@@ -160,10 +160,8 @@ class Servidor extends Thread
 					}	
 				}
 				else if (recibido.toLowerCase().equals(USO))
-				{					
-					// Convierte a horas en float
-					//float tiempo_funcionando = (float)(sistema.getTiempoFuncionando()/3600000);					
-					respuesta = "Uso caldera: " + sistema.getTiempoFuncionando();									
+				{									
+					respuesta = "Horas caldera: " + sistema.getTiempoFuncionando();									
 				}
 				else
 				{

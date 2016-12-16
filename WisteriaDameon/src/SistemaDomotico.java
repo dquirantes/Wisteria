@@ -38,9 +38,12 @@ public class SistemaDomotico {
 	private long tiempoFuncionando = 0;
 	
 	
-	public long getTiempoFuncionando()
+	public String getTiempoFuncionando()
 	{
-		return tiempoFuncionando;
+		float horas_funcionamiento= (float)tiempoFuncionando/(float)3600000;
+		String resultado = String.format("%.2f", horas_funcionamiento);
+		
+		return resultado;
 	}
 	public void incrementarTiempoFuncionando(long tiempo)
 	{
@@ -327,7 +330,7 @@ public class SistemaDomotico {
 				
 		res += "Caldera: " + rele + " - ";
 		res += "Media: " + calcularTemperaturaMedia() + " - ";		
-		res += "Uso: " + tiempoFuncionando;
+		res += "Uso: " + this.getTiempoFuncionando();
 		
 		return res;
 

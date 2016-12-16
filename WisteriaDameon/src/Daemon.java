@@ -138,9 +138,9 @@ public class Daemon {
 		c.set(Calendar.MINUTE, 59);
 		c.set(Calendar.SECOND, 0);
 		horaCambioDia = c.getTime();
-		Timer temporizador = new Timer();
+		Timer timer_cambio_dia = new Timer();
 		log.debug ("Planificación cambio de hora: " + horaCambioDia);
-		temporizador.schedule(new CambioDia(sistema,notificaciones), horaCambioDia, 86400000);
+		timer_cambio_dia.schedule(new CambioDia(sistema,notificaciones), horaCambioDia, 86400000);
 
 		try 
 		{
@@ -150,6 +150,7 @@ public class Daemon {
 		{
 			log.error(e1);
 		}
+
 
 
 		while (FLAG_FILE.exists() && sistema.getErrorSistema()==null)
@@ -239,7 +240,9 @@ public class Daemon {
 		timer_registro.cancel();
 		timer_registro_web.cancel();
 		timer_notificaciones.cancel();
-
+		timer_xml.cancel();
+		timer_cambio_dia.cancel();
+		
 		// Cierra el servidor
 		servidor.cerrar();
 		long ms_fin = System.currentTimeMillis();
