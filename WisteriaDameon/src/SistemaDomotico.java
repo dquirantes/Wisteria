@@ -36,18 +36,37 @@ public class SistemaDomotico {
 	
 	private int arranques = 0;
 	private long tiempoFuncionando = 0;
+	private long tiempoultimoArranque = 0;
 	
 	
 	public String getTiempoFuncionando()
-	{
-		float horas_funcionamiento= (float)tiempoFuncionando/(float)3600000;
-		String resultado = String.format("%.2f", horas_funcionamiento);
+	{		
+		// Tiempo de funcionamiento	
+		float horas_funcionamiento = this.tiempoFuncionando;
 		
-		return resultado;
+		
+		// Incremente lo que lleve en el último ciclo
+		if (this.getEstadoRele()==EstadoRele.ABIERTO)
+			horas_funcionamiento += System.currentTimeMillis() -  tiempoultimoArranque;
+
+		
+		// Convierte a float horas
+		horas_funcionamiento= (float)horas_funcionamiento/(float)3600000;
+		
+		
+		return String.format("%.2f", horas_funcionamiento);		
+		
 	}
-	public void incrementarTiempoFuncionando(long tiempo)
+	
+	public void setTiempoParada()
 	{
-		tiempoFuncionando = tiempoFuncionando + tiempo;
+		
+		tiempoFuncionando = tiempoFuncionando + System.currentTimeMillis() -  tiempoultimoArranque;
+	}
+	
+	public void setTiempoArranque()
+	{
+		tiempoultimoArranque = System.currentTimeMillis();		
 	}
 	
 	/*public void incializarTiempoFuncionando()
@@ -356,8 +375,10 @@ public class SistemaDomotico {
 		else
 			res += "Modo: " + modo + " - " ;
 		
-		res += "Caldera: " + rele;
+		res += "Caldera: " + rele + " - ";
 
+		res += "Media: " + calcularTemperaturaMedia() + " - ";		
+		res += "Uso: " + this.getTiempoFuncionando();
 
 		return res;
 

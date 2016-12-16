@@ -32,7 +32,7 @@ public class Daemon {
 
 
 		long ms_inicio = System.currentTimeMillis();
-		long ms_arranque = System.currentTimeMillis();
+		
 		PropertyConfigurator.configure(ruta_log4j);
 
 
@@ -181,9 +181,10 @@ public class Daemon {
 					// Cuenta de ciclos de funcionamiento
 					sistema.aumentarArranques();
 					
+					// Establece el tiempo del arranque
+					sistema.setTiempoArranque();
 					
-					ms_arranque = System.currentTimeMillis();
-					log.debug("Tiempo arranque: " + ms_arranque);
+					
 				}
 				else if (estado_nuevo == EstadoRele.CERRADO)					
 				{
@@ -192,13 +193,10 @@ public class Daemon {
 					if (sistema.getEnviarNotificaciones())
 						notificaciones.enviar("Apagar la caldera");
 					basedatos.cerrar((sistema.getTemperatura()));
+									
+					sistema.setTiempoParada();
 					
-					long ms_parada = System.currentTimeMillis();
 					
-					long duracion = ms_parada - ms_arranque;
-					log.debug("Tiempo parada: " + duracion);
-					
-					sistema.incrementarTiempoFuncionando(duracion);
 					
 					log.debug("Acumulado sistema: " + sistema.getTiempoFuncionando());
 				}

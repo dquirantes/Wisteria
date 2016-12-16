@@ -33,7 +33,7 @@ public class PanelActuador extends TimerTask {
 
 		//TODO: comprobar esto antes de subir
 		res = basedatos.obtenerOrden();		
-		//res = "CLIMATIZADOR;40;5;true;DORMITORIO";
+		//res = "CLIMATIZADOR;40;55;true;DORMITORIO";
 
 		if (res=="")
 		{
