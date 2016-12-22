@@ -117,7 +117,7 @@ public class SensorTempertura extends TimerTask{
 
 
 			log.debug ("Recibido ESP8266 habitacion1");
-			
+
 			if ((linea = in.readLine()) != null) 
 			{
 				log.debug (linea);
@@ -126,10 +126,14 @@ public class SensorTempertura extends TimerTask{
 				humedad_habitacion1 = Float.parseFloat(partes[1]);
 				temp_habitacion1 = Float.parseFloat(partes[2]);
 
-				sistema.setTemp_habitacion1(temp_habitacion1);
-				sistema.setHumedad_habitacion1(humedad_habitacion1);
+				if (temp_habitacion1>=0)
+				{
+					sistema.setTemp_habitacion1(temp_habitacion1);
+					sistema.setHumedad_habitacion1(humedad_habitacion1);
+					errores3=0;
+				}
 
-				errores3=0;
+
 
 			}
 		}catch (Exception e)
@@ -170,16 +174,18 @@ public class SensorTempertura extends TimerTask{
 				humedad_habitacion2 = Float.parseFloat(partes[1]);
 				temp_habitacion2 = Float.parseFloat(partes[2]);
 
-				sistema.setTemp_habitacion2(temp_habitacion2);
-				sistema.setHumedad_habitacion2(humedad_habitacion2);
-
-				errores4=0;
+				if (temp_habitacion2>=0)
+				{
+					sistema.setTemp_habitacion2(temp_habitacion2);
+					sistema.setHumedad_habitacion2(humedad_habitacion2);
+					errores4=0;
+				}
 
 			}
 		}catch (Exception e)
 		{
 			e.printStackTrace();
-			
+
 			errores4++;
 
 
