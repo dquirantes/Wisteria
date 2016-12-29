@@ -39,6 +39,12 @@ public class SistemaDomotico {
 	private long tiempoultimoArranque = 0;
 	
 	
+	public void inicializarTiempoFuncionando()
+	{
+		tiempoFuncionando=0;
+		tiempoultimoArranque=System.currentTimeMillis();
+	}
+	
 	public String getTiempoFuncionando()
 	{		
 		// Tiempo de funcionamiento	

@@ -31,7 +31,8 @@ public class CambioDia  extends TimerTask {
 		notificaciones.enviar("Tiempo funcionamiento: " + sistema.getTiempoFuncionando());
 		
 		
-		sistema.inicializarArranques();							
+		sistema.inicializarArranques();		
+		sistema.inicializarTiempoFuncionando();
 	}
 
 }
