@@ -1,4 +1,5 @@
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.TimerTask;
 
@@ -133,9 +134,13 @@ public class GenerarXML extends TimerTask {
 			raiz.appendChild(itemNode10);
 			itemNode10.appendChild(document.createTextNode(sistema.getTemperatura_raspi()+""));
 
+			
+			DecimalFormat df = new DecimalFormat("#.##");
+			String temp_media=df.format(sistema.calcularTemperaturaMedia());			
+			
 			Element itemNode11 = document.createElement("TemperaturaMedia"); 
 			raiz.appendChild(itemNode11);
-			itemNode11.appendChild(document.createTextNode(sistema.calcularTemperaturaMedia()+""));			
+			itemNode11.appendChild(document.createTextNode(temp_media));			
  
 			Element itemNode12 = document.createElement("TiempoFuncionamiento"); 
 			raiz.appendChild(itemNode12);
