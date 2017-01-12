@@ -38,6 +38,81 @@ public class SensorTempertura extends TimerTask{
 	}
 
 
+	private Medicion medicionGPIO (String info)
+	{
+		String res ="";
+		String partes[];
+
+
+		Medicion medicion = new Medicion();		
+
+		try
+		{
+			res= programa_externo.ejecutar(programa + " " + info);
+			partes = res.split(",");			
+			medicion.humedad = Float.parseFloat(partes[0]);							
+			medicion.temperatura= Float.parseFloat(partes[1]);
+
+		}catch (Exception e)
+		{
+			medicion = null;
+			log.error("Fallo a ejecutar programa " + e);		
+		}
+
+
+
+		return medicion;
+	}
+
+	private Medicion medicionWeb(String info)
+	{
+		Medicion medicion = new Medicion();
+		log.debug ("Conectado Web" + info);
+
+
+		try
+		{
+			URL url = new URL(info);
+			URLConnection con = (URLConnection) url.openConnection();
+
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(con.getInputStream()));
+
+
+			String linea;
+			String []partes;
+
+			
+			if ((linea = in.readLine()) != null) 
+			{			
+				partes = linea.split(",");
+
+				medicion.humedad=Float.parseFloat(partes[1]);
+				medicion.temperatura = Float.parseFloat(partes[2]);
+			}
+		}
+		catch(Exception e)
+		{
+			medicion = null;
+			log.error("Error lectura sensor web " + e);
+		}
+		return medicion;
+
+	}
+
+	private Medicion medicionTemperatura(String info)
+	{			
+
+
+		if (info.toLowerCase().startsWith("http"))			
+		{
+			return medicionWeb(info);
+		}else
+		{
+			return medicionGPIO(info);
+		}		
+	}
+
 	@Override
 	public void run() {
 
@@ -45,57 +120,41 @@ public class SensorTempertura extends TimerTask{
 		log.debug("Sensor temperatura");
 
 
-
-		String res;
-		float humedad;
-		float temp;
-		float humedad_dormitorio;
-		float temp_dormitorio;
-		float humedad_habitacion1;
-		float temp_habitacion1;
-		float humedad_habitacion2;
-		float temp_habitacion2;				
+		String res;									
 
 		float temp_placa;
 		String partes[];
-		String linea;
+		
 
 
 
-		try
-		{
-			res= programa_externo.ejecutar(programa + " " + config.get_Gpio_Salon());
-			partes= res.split(",");
-			humedad = Float.parseFloat(partes[0]);							
-			temp = Float.parseFloat(partes[1]);
 
-			sistema.setTemp(temp);
-			sistema.setHumedad(humedad);
-
+		Medicion medicion = medicionTemperatura(config.get_Gpio_Salon());
+		if (medicion!=null)
+		{			
+			sistema.setTemp(medicion.temperatura);
+			sistema.setHumedad(medicion.humedad);
 			errores1 =0;
-		}catch (Exception e)
+		}
+		else
 		{
 			errores1++;
 			log.error("Fallo sensor tempertura salon");
 
 			if (errores1>ERRORES_MAXIMOS)
-				sistema.setErrorSistema(ErroresSistema.SENSORES);				
+				sistema.setErrorSistema(ErroresSistema.SENSORES);		
 		}
 
 
-		try
-		{
-			res= programa_externo.ejecutar(programa + " " + config.get_Gpio_Dormitorio());
-			partes = res.split(",");
-			humedad_dormitorio = Float.parseFloat(partes[0]);							
-			temp_dormitorio = Float.parseFloat(partes[1]);
-
-			sistema.setTempdormitorio(temp_dormitorio);
-			sistema.setHumedaddormitorio(humedad_dormitorio);
-
+		medicion = medicionTemperatura(config.get_Gpio_Dormitorio());
+		if (medicion!=null)
+		{						
+			sistema.setTempdormitorio(medicion.temperatura);
+			sistema.setHumedaddormitorio(medicion.humedad);
 			errores2=0;
 
-		}catch (Exception e)
+		}
+		else
 		{
 			errores2++;
 			log.error("Fallo sensor dormitorio");
@@ -105,46 +164,20 @@ public class SensorTempertura extends TimerTask{
 		}
 
 
-		try
+		
+		medicion = medicionTemperatura(config.get_Gpio_habitacion1());
+		if (medicion!=null)
 		{
-
-			log.debug ("Conectado ESP8266 habitacion1");
-			URL url = new URL(config.get_Gpio_habitacion1());
-			URLConnection con = (URLConnection) url.openConnection();
-
-			BufferedReader in = new BufferedReader(
-					new InputStreamReader(con.getInputStream()));
-
-
-			log.debug ("Recibido ESP8266 habitacion1");
-
-			if ((linea = in.readLine()) != null) 
-			{
-				log.debug (linea);
-				partes = linea.split(",");
-
-				humedad_habitacion1 = Float.parseFloat(partes[1]);
-				temp_habitacion1 = Float.parseFloat(partes[2]);
-
-				if (temp_habitacion1>=0)
-				{
-					sistema.setTemp_habitacion1(temp_habitacion1);
-					sistema.setHumedad_habitacion1(humedad_habitacion1);
-					errores3=0;
-				}
-
-
-
-			}
-		}catch (Exception e)
-		{
-			e.printStackTrace();
+			sistema.setTemp_habitacion1(medicion.temperatura);
+			sistema.setHumedad_habitacion1(medicion.humedad);
+			errores3=0;
+		
+		}else			
+		{			
 			errores3++;
-
-
 			log.error("Fallo sensor habitación1 ESP8266");
 
-			// 
+ 
 			if (errores3>ERRORES_MAXIMOS)
 			{
 				sistema.setTemp_habitacion1(0f);
@@ -154,52 +187,28 @@ public class SensorTempertura extends TimerTask{
 		}
 
 
-
-		try
+		medicion = medicionTemperatura(config.get_Gpio_habitacion2());
+		if (medicion!=null)
 		{
-
-			log.debug ("Conectado ESP8266 habitacion2");
-			URL url = new URL(config.get_Gpio_habitacion2());
-			URLConnection con = (URLConnection) url.openConnection();
-
-			BufferedReader in = new BufferedReader(
-					new InputStreamReader(con.getInputStream()));
-
-
-			if ((linea = in.readLine()) != null) 
-			{
-				log.debug ("Recibido ESP8266 habitacion2");
-				partes = linea.split(",");
-
-				humedad_habitacion2 = Float.parseFloat(partes[1]);
-				temp_habitacion2 = Float.parseFloat(partes[2]);
-
-				if (temp_habitacion2>=0)
-				{
-					sistema.setTemp_habitacion2(temp_habitacion2);
-					sistema.setHumedad_habitacion2(humedad_habitacion2);
-					errores4=0;
-				}
-
-			}
-		}catch (Exception e)
-		{
-			e.printStackTrace();
-
+			sistema.setTemp_habitacion2(medicion.temperatura);
+			sistema.setHumedad_habitacion2(medicion.humedad);
+			errores4=0;
+		
+		}else			
+		{			
 			errores4++;
-
-
 			log.error("Fallo sensor habitación2 ESP8266");
 
+ 
 			if (errores4>ERRORES_MAXIMOS)
 			{
 				sistema.setTemp_habitacion2(0f);
-				sistema.setHumedad_habitacion2(0f);				
-				//sistema.setErrorSistema(ErroresSistema.SENSORES);
+				sistema.setHumedad_habitacion2(0f);
 			}
 
 		}
 
+		
 
 		try
 		{
