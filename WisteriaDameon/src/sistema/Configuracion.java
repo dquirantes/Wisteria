@@ -50,7 +50,7 @@ public class Configuracion {
 	private long tBucle;
 	private long tRegistro;
 	private long tRegistroWeb;
-	private long tNotificaciones;
+	//private long tNotificaciones;
 	private long tEstado;
 
 	private float tmp_Margen;
@@ -114,7 +114,7 @@ public class Configuracion {
 			tBucle= Long.parseLong(prop.getProperty("tBucle"));
 			tRegistro= Long.parseLong(prop.getProperty("tRegistro"));
 			tRegistroWeb= Long.parseLong(prop.getProperty("tRegistroWeb"));
-			tNotificaciones= Long.parseLong(prop.getProperty("tNotificaciones"));
+			//tNotificaciones= Long.parseLong(prop.getProperty("tNotificaciones"));
 			tEstado= Long.parseLong(prop.getProperty("tEstado"));
 			
 
@@ -167,10 +167,10 @@ public class Configuracion {
 		return tBucle;
 	}
 
-	public long gettNotificaciones()
+	/*public long gettNotificaciones()
 	{
 		return tNotificaciones;
-	}
+	}*/
 
 	public long gettRegistro()
 	{

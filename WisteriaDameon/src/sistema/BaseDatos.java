@@ -189,7 +189,7 @@ public class BaseDatos {
 		return true;
 
 	}
-	public Boolean insertarInstruccion(int codigo_modo,float temperatura,String usuario, boolean notificar, String opciones_modo) 
+	public Boolean insertarInstruccion(int codigo_modo,float temperatura,String usuario, String opciones_modo) 
 	{
 		String query = "INSERT INTO INSTRUCCION (COD_MODO,TEMPERATURA,USUARIO,FECHA,NOTIFICAR,OPCIONES_MODO)"
 				+ "values (?,?,?,now(),?,?)";
@@ -201,7 +201,7 @@ public class BaseDatos {
 			preparedStmt.setInt(1, codigo_modo);
 			preparedStmt.setFloat(2, temperatura);
 			preparedStmt.setString(3, usuario);						
-			preparedStmt.setBoolean(4,notificar);
+			preparedStmt.setBoolean(4,true);
 			preparedStmt.setString(5, opciones_modo);
 
 			preparedStmt.execute();

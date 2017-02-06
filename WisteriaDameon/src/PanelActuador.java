@@ -56,7 +56,7 @@ public class PanelActuador extends TimerTask {
 				{
 					sistema.setModoSistema(ModoSistema.valueOf(partes[0]));
 					sistema.setTempclimatizador(temp);
-					sistema.setEnviarNotificaciones(Boolean.parseBoolean(partes[3]));
+					//sistema.setEnviarNotificaciones(Boolean.parseBoolean(partes[3]));
 					sistema.set_opcionesModo(OpcionesModo.valueOf(partes[4]));
 
 
@@ -68,7 +68,7 @@ public class PanelActuador extends TimerTask {
 					log.debug ("Climatizador modo: " + sistema.getModoSistema());
 					log.debug ("Opciones  modo: " + sistema.get_opcionesModo());
 					log.debug ("Climatizador temp: " + sistema.getTemperatura_Climatizador());
-					log.debug ("Notificaciones: " + sistema.getEnviarNotificaciones());
+					//log.debug ("Notificaciones: " + sistema.getEnviarNotificaciones());
 				}
 			}catch (Exception e)
 			{

@@ -25,9 +25,9 @@ class Servidor extends Thread
 	static final String CALEFACCION_SALON = "calefaccion_salon";
 	static final String CALEFACCION_APAGAR = "calefaccion_apagar";
 	
-	static final String NOTIFICACIONES = "notificaciones";
+	/*static final String NOTIFICACIONES = "notificaciones";
 	static final String NOTIFICACIONES_SI = "notificaciones_si";
-	static final String NOTIFICACIONES_NO = "notificaciones_no";
+	static final String NOTIFICACIONES_NO = "notificaciones_no";*/
 	
 	static final String USO = "uso";
 	
@@ -123,17 +123,17 @@ class Servidor extends Thread
 				}
 				else if (recibido.toLowerCase().equals(CALEFACCION_DORMITORIO))
 				{					
-					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), "david", sistema.getEnviarNotificaciones(), "DORMITORIO");															
+					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), "david", "DORMITORIO");															
 				}
 				else if (recibido.toLowerCase().equals(CALEFACCION_SALON))
 				{					
-					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), "david", sistema.getEnviarNotificaciones(), "SALON");																
+					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), "david", "SALON");																
 				}
 				else if (recibido.toLowerCase().equals(CALEFACCION_APAGAR))
 				{					
-					basedatos.insertarInstruccion(2, sistema.getTemperatura_Climatizador(), "david", sistema.getEnviarNotificaciones(), sistema.get_opcionesModo().toString());									
+					basedatos.insertarInstruccion(2, sistema.getTemperatura_Climatizador(), "david", sistema.get_opcionesModo().toString());									
 				}
-				else if (recibido.toLowerCase().equals(NOTIFICACIONES))
+				/*else if (recibido.toLowerCase().equals(NOTIFICACIONES))
 				{					
 					respuesta = "Notificaciones: " + sistema.getEnviarNotificaciones();
 				}
@@ -146,7 +146,7 @@ class Servidor extends Thread
 				{					
 					respuesta = "Desactivar notificaciones";
 					sistema.setEnviarNotificaciones(false);
-				}
+				}*/
 				
 				else if (recibido.toLowerCase().equals(SALIR))
 				{

@@ -76,11 +76,11 @@ public class Daemon {
 
 
 		EnviarNotificaciones notificaciones = new EnviarNotificaciones (configuracion.getProgramaNotificaciones());
-		notificaciones.enviar("Arrancando Sistema Domotico");
+		notificaciones.enviar("Arrancando Sistema Domotico Wisteria");
 
-		NotificacionesInformacion notificaciones_info = new NotificacionesInformacion (notificaciones,sistema);
+		/*NotificacionesInformacion notificaciones_info = new NotificacionesInformacion (notificaciones,sistema);
 		Timer timer_notificaciones = new Timer(true);
-		timer_notificaciones.scheduleAtFixedRate(notificaciones_info, 30000, configuracion.gettNotificaciones()* 1000);
+		timer_notificaciones.scheduleAtFixedRate(notificaciones_info, 30000, configuracion.gettNotificaciones()* 1000);*/
 
 
 		GenerarXML generarxml = new GenerarXML (sistema, configuracion.getFicheroEstado()); 
@@ -175,23 +175,23 @@ public class Daemon {
 					rele.abrir();
 					basedatos.abrir(sistema.getTemperatura());
 
-					if (sistema.getEnviarNotificaciones())
-						notificaciones.enviar("Encender la caldera");
+					
 
 					// Cuenta de ciclos de funcionamiento
 					sistema.aumentarArranques();
 					
 					// Establece el tiempo del arranque
 					sistema.setTiempoArranque();
-					
-					
+										
+					if (sistema.getArranques()==1)
+						notificaciones.enviar("Encender la caldera");
 				}
 				else if (estado_nuevo == EstadoRele.CERRADO)					
 				{
 					rele.cerrar();
 					log.debug ("Apagar caldera");
-					if (sistema.getEnviarNotificaciones())
-						notificaciones.enviar("Apagar la caldera");
+					/*if (sistema.getEnviarNotificaciones())
+						notificaciones.enviar("Apagar la caldera");*/
 					basedatos.cerrar((sistema.getTemperatura()));
 									
 					sistema.setTiempoParada();
@@ -237,7 +237,7 @@ public class Daemon {
 		timer_actuador.cancel();		
 		timer_registro.cancel();
 		timer_registro_web.cancel();
-		timer_notificaciones.cancel();
+		//timer_notificaciones.cancel();
 		timer_xml.cancel();
 		timer_cambio_dia.cancel();
 		

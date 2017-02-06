@@ -1,7 +1,10 @@
+/Calculador.class
+/CambioDia.class
 /Daemon.class
 /ErroresSistema.class
 /EstadoRele.class
 /GenerarXML.class
+/Medicion.class
 /ModoSistema.class
 /NotificacionesInformacion.class
 /OpcionesModo.class
@@ -14,4 +17,3 @@
 /SistemaDomotico.class
 /TemperaturaExterna.class
 /sistema/
-/Medicion.class

@@ -32,7 +32,7 @@ public class SistemaDomotico {
 	
 	private float temp_raspi;
 	
-	private boolean enviarNotificaciones;
+	//private boolean enviarNotificaciones;
 	
 	private int arranques = 0;
 	private long tiempoFuncionando = 0;
@@ -98,14 +98,14 @@ public class SistemaDomotico {
 	
 
 	
-	public void setEnviarNotificaciones(boolean enviar)
+	/*public void setEnviarNotificaciones(boolean enviar)
 	{
 		this.enviarNotificaciones = enviar;		
 	}
 	public Boolean getEnviarNotificaciones()
 	{
 		return enviarNotificaciones;
-	}
+	}*/
 	public void setErrorSistema(ErroresSistema error)
 	{
 		this.errorSistema = error;
