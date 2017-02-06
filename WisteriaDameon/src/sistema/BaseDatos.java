@@ -54,7 +54,7 @@ public class BaseDatos {
 
 			log.debug ("BBDD obtenerOrden");
 			Statement s = cadena_conexion.createStatement(); 
-			ResultSet rs = s.executeQuery ("SELECT MODO,TEMPERATURA,T2.COD_MODO,COD_INSTRUCCION,NOTIFICAR,OPCIONES_MODO FROM MODOFUNCIONAMIENTO AS T1,INSTRUCCION AS T2 WHERE T1.COD_MODO=T2.COD_MODO order by cod_instruccion desc limit 1");
+			ResultSet rs = s.executeQuery ("SELECT MODO,TEMPERATURA,T2.COD_MODO,COD_INSTRUCCION,true,OPCIONES_MODO FROM MODOFUNCIONAMIENTO AS T1,INSTRUCCION AS T2 WHERE T1.COD_MODO=T2.COD_MODO order by cod_instruccion desc limit 1");
 
 
 
