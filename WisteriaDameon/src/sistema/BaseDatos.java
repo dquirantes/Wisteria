@@ -191,8 +191,8 @@ public class BaseDatos {
 	}
 	public Boolean insertarInstruccion(int codigo_modo,float temperatura,String usuario, String opciones_modo) 
 	{
-		String query = "INSERT INTO INSTRUCCION (COD_MODO,TEMPERATURA,USUARIO,FECHA,NOTIFICAR,OPCIONES_MODO)"
-				+ "values (?,?,?,now(),?,?)";
+		String query = "INSERT INTO INSTRUCCION (COD_MODO,TEMPERATURA,USUARIO,FECHA,OPCIONES_MODO)"
+				+ "values (?,?,?,now(),?)";
 
 		try
 		{
@@ -200,9 +200,8 @@ public class BaseDatos {
 			PreparedStatement preparedStmt = cadena_conexion.prepareStatement(query);
 			preparedStmt.setInt(1, codigo_modo);
 			preparedStmt.setFloat(2, temperatura);
-			preparedStmt.setString(3, usuario);						
-			preparedStmt.setBoolean(4,true);
-			preparedStmt.setString(5, opciones_modo);
+			preparedStmt.setString(3, usuario);									
+			preparedStmt.setString(4, opciones_modo);
 
 			preparedStmt.execute();
 

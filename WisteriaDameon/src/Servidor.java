@@ -10,27 +10,33 @@ import sistema.Configuracion;
 
 class Servidor extends Thread  
 {
+	static final String USUARIO = "telegram";
+
 	static final String INFO = "info";
 	static final String SALON= "salon";
 	static final String DORMITORIO = "dormitorio";
 	static final String HABITACION1 = "habitacion1";
 	static final String HABITACION2 = "habitacion2";
 	static final String MEDIA = "media";
-	
+
 	static final String RASPBERRY = "raspberry";
 	static final String EXTERNA = "externa";
 	static final String SALIR = "salir";
 
-	static final String CALEFACCION_DORMITORIO = "calefaccion_dormitorio";
-	static final String CALEFACCION_SALON = "calefaccion_salon";
-	static final String CALEFACCION_APAGAR = "calefaccion_apagar";
-	
+	static final String CLIMA_DORMITORIO = "clima dormitorio";
+	static final String CLIMA_SALON = "clima salon";
+	static final String CLIMA_HABITACION1 = "clima habitacion1";
+	static final String CLIMA_HABITACION2 = "clima habitacion2";
+	static final String CLIMA_APAGAR = "clima apagar";
+
+	static final String AYUDA = "ayuda";
+
 	/*static final String NOTIFICACIONES = "notificaciones";
 	static final String NOTIFICACIONES_SI = "notificaciones_si";
 	static final String NOTIFICACIONES_NO = "notificaciones_no";*/
-	
+
 	static final String USO = "uso";
-	
+
 	private static final Logger log = Logger.getLogger("Dameon");
 
 
@@ -39,7 +45,7 @@ class Servidor extends Thread
 	EnviarNotificaciones notificaciones;
 	Configuracion configuracion;
 	BaseDatos basedatos;
-	
+
 	ServerSocket skServidor;
 
 	public Servidor(SistemaDomotico sistema, EnviarNotificaciones notificaciones, Configuracion configuracion, BaseDatos bbdd) 
@@ -56,13 +62,15 @@ class Servidor extends Thread
 		log.info("Cerrar servidor");
 		try {
 			skServidor.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException e) 
+		{
+			log.error("Error cerrar servidor " + e);
+
 		}
 	}
 	public void run() 
 	{
-		
+
 		String recibido;
 
 		try 
@@ -70,12 +78,12 @@ class Servidor extends Thread
 			log.info("Arrancar servidor puerto: " + configuracion.getPuerto());
 			skServidor = new ServerSocket(configuracion.getPuerto());
 
-			
+
 
 			while (true)
 			{
 				String respuesta = "";
-				
+
 				Socket skCliente = skServidor.accept(); 
 
 
@@ -121,17 +129,25 @@ class Servidor extends Thread
 				{					
 					respuesta = "Las Rozas: " + sistema.getTempExterna() + "º";;				
 				}
-				else if (recibido.toLowerCase().equals(CALEFACCION_DORMITORIO))
+				else if (recibido.toLowerCase().equals(CLIMA_DORMITORIO))
 				{					
-					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), "david", "DORMITORIO");															
+					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), USUARIO, "DORMITORIO");															
 				}
-				else if (recibido.toLowerCase().equals(CALEFACCION_SALON))
+				else if (recibido.toLowerCase().equals(CLIMA_SALON))
 				{					
-					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), "david", "SALON");																
+					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), USUARIO, "SALON");																
 				}
-				else if (recibido.toLowerCase().equals(CALEFACCION_APAGAR))
+				else if (recibido.toLowerCase().equals(CLIMA_HABITACION1))
 				{					
-					basedatos.insertarInstruccion(2, sistema.getTemperatura_Climatizador(), "david", sistema.get_opcionesModo().toString());									
+					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), USUARIO, "HABITACION1");															
+				}
+				else if (recibido.toLowerCase().equals(CLIMA_HABITACION2))
+				{					
+					basedatos.insertarInstruccion(1, sistema.getTemperatura_Climatizador(), USUARIO, "HABITACION2");																
+				}
+				else if (recibido.toLowerCase().equals(CLIMA_APAGAR))
+				{					
+					basedatos.insertarInstruccion(2, sistema.getTemperatura_Climatizador(), USUARIO, sistema.get_opcionesModo().toString());									
 				}
 				/*else if (recibido.toLowerCase().equals(NOTIFICACIONES))
 				{					
@@ -147,7 +163,7 @@ class Servidor extends Thread
 					respuesta = "Desactivar notificaciones";
 					sistema.setEnviarNotificaciones(false);
 				}*/
-				
+
 				else if (recibido.toLowerCase().equals(SALIR))
 				{
 					File FLAG_FILE = new File(configuracion.getFicheroTemporal());
@@ -163,6 +179,13 @@ class Servidor extends Thread
 				{									
 					respuesta = "Horas caldera: " + sistema.getTiempoFuncionando();									
 				}
+				else if (recibido.toLowerCase().equals(AYUDA))
+				{									
+					respuesta = String.format("comandos disponibles: %s %s %s %s %s %s %s %s %s %s %s %s %s %s" ,
+							INFO,SALON,DORMITORIO,HABITACION1,HABITACION2,MEDIA, RASPBERRY, 
+							EXTERNA, SALIR, CLIMA_DORMITORIO,  CLIMA_SALON,CLIMA_HABITACION1, 
+							CLIMA_HABITACION2, CLIMA_APAGAR);									
+				}
 				else
 				{
 					log.error("Opción incorrecta servidor: " + recibido);
@@ -172,14 +195,14 @@ class Servidor extends Thread
 				// Devuelve OK al cliente
 				flujo.writeUTF("OK");
 				skCliente.close();
-				
+
 				if (respuesta!="")
 					notificaciones.enviar(respuesta);
-					
+
 			}
 		} catch( Exception e ) 
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 			log.error("Error Servidor "  + e.getMessage());
 		}		
 	}
