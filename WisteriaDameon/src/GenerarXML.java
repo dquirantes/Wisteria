@@ -140,11 +140,11 @@ public class GenerarXML extends TimerTask {
 			
 			Element itemNode11 = document.createElement("TemperaturaMedia"); 
 			raiz.appendChild(itemNode11);
-			itemNode11.appendChild(document.createTextNode(temp_media));			
+			itemNode11.appendChild(document.createTextNode(temp_media.replace(",", ".")));			
  
 			Element itemNode12 = document.createElement("TiempoFuncionamiento"); 
 			raiz.appendChild(itemNode12);
-			itemNode12.appendChild(document.createTextNode(sistema.getTiempoFuncionando()+""));			
+			itemNode12.appendChild(document.createTextNode(sistema.getTiempoFuncionando().replace(",", ".")));			
  			
 			
 
