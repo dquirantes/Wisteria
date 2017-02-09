@@ -130,7 +130,8 @@ public class SensorTempertura extends TimerTask{
 
 
 		Medicion medicion = medicionTemperatura(config.get_Gpio_Salon());
-		if (medicion!=null)
+		// 09/02/2017 descarta las menores que cero
+		if (medicion!=null && medicion.temperatura>0)
 		{			
 			sistema.setTemp(medicion.temperatura);
 			sistema.setHumedad(medicion.humedad);
@@ -147,7 +148,8 @@ public class SensorTempertura extends TimerTask{
 
 
 		medicion = medicionTemperatura(config.get_Gpio_Dormitorio());
-		if (medicion!=null)
+		// 09/02/2017 descarta las menores que cero
+		if (medicion!=null  && medicion.temperatura>0)
 		{						
 			sistema.setTempdormitorio(medicion.temperatura);
 			sistema.setHumedaddormitorio(medicion.humedad);
@@ -166,7 +168,8 @@ public class SensorTempertura extends TimerTask{
 
 		
 		medicion = medicionTemperatura(config.get_Gpio_habitacion1());
-		if (medicion!=null)
+		// 09/02/2017 descarta las menores que cero
+		if (medicion!=null && medicion.temperatura>0)
 		{
 			sistema.setTemp_habitacion1(medicion.temperatura);
 			sistema.setHumedad_habitacion1(medicion.humedad);
@@ -188,7 +191,8 @@ public class SensorTempertura extends TimerTask{
 
 
 		medicion = medicionTemperatura(config.get_Gpio_habitacion2());
-		if (medicion!=null)
+		// 09/02/2017 descarta las menores que cero
+		if (medicion!=null && medicion.temperatura>0)
 		{
 			sistema.setTemp_habitacion2(medicion.temperatura);
 			sistema.setHumedad_habitacion2(medicion.humedad);
