@@ -67,14 +67,17 @@ public class SensorTempertura extends TimerTask{
 	private Medicion medicionWeb(String info)
 	{
 		Medicion medicion = new Medicion();
-		log.debug ("Conectado Web" + info);
+		log.debug ("Conectado Web " + info);
 
 
 		try
 		{
-			URL url = new URL(info);
+			URL url = new URL(info);						
 			URLConnection con = (URLConnection) url.openConnection();
-
+			//Cambio de timeout
+			con.setConnectTimeout(5000);
+			con.setReadTimeout(5000);
+			
 			BufferedReader in = new BufferedReader(
 					new InputStreamReader(con.getInputStream()));
 
@@ -107,7 +110,12 @@ public class SensorTempertura extends TimerTask{
 		if (info.toLowerCase().startsWith("http"))			
 		{
 			return medicionWeb(info);
-		}else
+		}else if (info.equals(""))
+		{
+			// Posiblidad de no realizar la lectura
+			return null;
+		}
+		else
 		{
 			return medicionGPIO(info);
 		}		
@@ -117,7 +125,7 @@ public class SensorTempertura extends TimerTask{
 	public void run() {
 
 
-		log.debug("Sensor temperatura");
+		log.debug("Sensor temperatura INICIO");
 
 
 		String res;									
@@ -245,5 +253,7 @@ public class SensorTempertura extends TimerTask{
 				sistema.setErrorSistema(ErroresSistema.SENSOR_PLACA);
 
 		}
+		
+		log.debug("Sensor temperatura FIN");
 	}
 }
