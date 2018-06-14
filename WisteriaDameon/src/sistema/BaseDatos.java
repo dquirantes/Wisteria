@@ -27,9 +27,11 @@ public class BaseDatos {
 
 		try 
 		{
-			Class.forName("com.mysql.jdbc.Driver");
-			cadena_conexion = DriverManager.getConnection ("jdbc:mysql://" + configuracion.getBDServidor() + "/" + configuracion.getBDName(),configuracion.getBDUsuario(), configuracion.getBDPassword());
-
+			log.debug("Conexion con MariaDB");
+			//Class.forName("com.mysql.jdbc.Driver");
+			//cadena_conexion = DriverManager.getConnection ("jdbc:mysql://" + configuracion.getBDServidor() + "/" + configuracion.getBDName(),configuracion.getBDUsuario(), configuracion.getBDPassword());
+			cadena_conexion = DriverManager.getConnection("jdbc:mariadb://" + configuracion.getBDServidor() + "/" + configuracion.getBDName(),configuracion.getBDUsuario(), configuracion.getBDPassword());
+			
 			log.debug ("BBDD " + cadena_conexion);
 		}
 		catch (Exception e)
