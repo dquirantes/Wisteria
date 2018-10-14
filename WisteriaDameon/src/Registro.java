@@ -31,7 +31,8 @@ public class Registro extends TimerTask {
 						sistema.getTemperatura_habitacion1(),sistema.getHumedad_Habitacion1(),
 						sistema.getTemperatura_habitacion2(),sistema.getHumedad_Habitacion2(),
 						sistema.getTemperatura_raspi(),
-						sistema.get_opcionesModo().toString());
+						sistema.get_opcionesModo().toString(),
+						sistema.calcularTemperaturaMedia());
 
 		if (!res)
 		{
