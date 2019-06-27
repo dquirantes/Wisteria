@@ -1,17 +1,21 @@
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import org.apache.log4j.Logger;
 
 import sistema.Configuracion;
-import sistema.ProgramaExterno;
 
 
 
 public class Rele {
 
 	private static final Logger log = Logger.getLogger("Dameon");
-	
 
-	ProgramaExterno programa = new ProgramaExterno();
+
+	//ProgramaExterno programa = new ProgramaExterno();
 
 
 	private Configuracion configuracion;
@@ -35,18 +39,49 @@ public class Rele {
 			log.debug ("Abrir rele");
 
 
-			try {
+			/*try {
 				programa.ejecutar(configuracion.getProgramaAbrir());
 			} catch (Exception e) {
 				e.printStackTrace();
+			}*/
+
+			try
+			{
+				URL url = new URL(configuracion.getShellyEnceder());
+
+				HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+				String result = "";
+				if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) 
+				{
+
+					InputStreamReader inputStreamReader =
+							new InputStreamReader(httpURLConnection.getInputStream());
+					BufferedReader bufferedReader =
+							new BufferedReader(inputStreamReader, 8192);
+					String line = null;
+					while((line = bufferedReader.readLine()) != null){
+						result += line;
+					}
+
+					bufferedReader.close();
+					sistema.setEstadoRele(EstadoRele.ABIERTO);
+					log.debug("Resultado shelly: " + result);
+					return true;
+				}
 			}
-			sistema.setEstadoRele(EstadoRele.ABIERTO);
-			return true;
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+				log.error(e);
+				sistema.setErrorSistema(ErroresSistema.SHELLY);
+	
+			}
+
 		}
-
 		return false;
-
 	}
+
 
 	public boolean cerrar ()
 	{
@@ -55,16 +90,41 @@ public class Rele {
 		{
 			log.debug ("Cerrar rele");
 
-			try {
-				programa.ejecutar(configuracion.getProgramaCerrar());
-			} catch (Exception e) {
-				log.error("Error cerrar rele " + e) ;
+			try
+			{
+				URL url = new URL(configuracion.getShellyApagar());
+
+				HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+				String result = "";
+				if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) 
+				{
+
+					InputStreamReader inputStreamReader =
+							new InputStreamReader(httpURLConnection.getInputStream());
+					BufferedReader bufferedReader =
+							new BufferedReader(inputStreamReader, 8192);
+					String line = null;
+					while((line = bufferedReader.readLine()) != null){
+						result += line;
+					}
+
+					bufferedReader.close();
+					sistema.setEstadoRele(EstadoRele.CERRADO);
+					log.debug("Resultado shelly: " + result);
+					return true;
+				}
 			}
-			sistema.setEstadoRele(EstadoRele.CERRADO);
-			return true;
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+				log.error(e);
+				sistema.setErrorSistema(ErroresSistema.SHELLY);				
+	
+			}
+
 		}
 		return false;
-
 	}
 
 

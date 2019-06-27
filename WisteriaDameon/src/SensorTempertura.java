@@ -1,10 +1,13 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import sistema.Configuracion;
 import sistema.ProgramaExterno;
@@ -97,7 +100,7 @@ public class SensorTempertura extends TimerTask{
 		catch(Exception e)
 		{
 			medicion = null;
-			log.error("Error lectura sensor web " + e);
+			log.error("Error lectura sensor web " + info + " " + e);
 		}
 		return medicion;
 
@@ -254,6 +257,53 @@ public class SensorTempertura extends TimerTask{
 
 		}
 		
+		// Medición Shelly
+		try {
+			URL urlShelly= new URL(config.getShellyEstado());
+
+			HttpURLConnection httpURLConnection = (HttpURLConnection) urlShelly.openConnection();
+
+			String result="";
+			if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) 
+			{
+				InputStreamReader inputStreamReader =
+						new InputStreamReader(httpURLConnection.getInputStream());
+				BufferedReader bufferedReader =
+						new BufferedReader(inputStreamReader, 8192);
+				String line = null;
+				while((line = bufferedReader.readLine()) != null){
+					result += line;
+				}
+
+				bufferedReader.close();
+
+				//ParseResult(result, sistema);
+
+				JSONObject jsonObject = new JSONObject(result);
+				double temperature = jsonObject.getDouble("temperature");
+				log.debug("Temperatura Shelly: " + temperature);
+
+				
+				JSONArray relays = jsonObject.getJSONArray("relays");
+
+				if(relays.length() > 0)
+				{
+					JSONObject JSONObject_weather = relays.getJSONObject(0);
+					Boolean ison = JSONObject_weather.getBoolean("ison");
+					log.debug("ISON Shelly: " + ison);
+				}
+							
+
+			} else {
+				log.error("Error in httpURLConnection.getResponseCode()!!!");
+			}
+
+		} catch (Exception e)
+		{
+			log.error ("Fallo Shelly " + e);
+			//e.printStackTrace();
+		}
+
 		log.debug("Sensor temperatura FIN");
 	}
 }

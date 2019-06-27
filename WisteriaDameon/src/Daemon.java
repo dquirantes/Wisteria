@@ -22,7 +22,6 @@ public class Daemon {
 
 
 
-
 	public static void main(String[] args) 
 	{
 
@@ -32,7 +31,7 @@ public class Daemon {
 
 
 		long ms_inicio = System.currentTimeMillis();
-		
+
 		PropertyConfigurator.configure(ruta_log4j);
 
 
@@ -175,14 +174,14 @@ public class Daemon {
 					rele.abrir();
 					basedatos.abrir(sistema.getTemperatura());
 
-					
+
 
 					// Cuenta de ciclos de funcionamiento
 					sistema.aumentarArranques();
-					
+
 					// Establece el tiempo del arranque
 					sistema.setTiempoArranque();
-										
+
 					if (sistema.getArranques()==1)
 						notificaciones.enviar("Encender la caldera");
 				}
@@ -193,11 +192,11 @@ public class Daemon {
 					/*if (sistema.getEnviarNotificaciones())
 						notificaciones.enviar("Apagar la caldera");*/
 					basedatos.cerrar((sistema.getTemperatura()));
-									
+
 					sistema.setTiempoParada();
-					
-					
-					
+
+
+
 					log.debug("Acumulado sistema: " + sistema.getTiempoFuncionando());
 				}
 
@@ -240,7 +239,7 @@ public class Daemon {
 		//timer_notificaciones.cancel();
 		timer_xml.cancel();
 		timer_cambio_dia.cancel();
-		
+
 		// Cierra el servidor
 		servidor.cerrar();
 		long ms_fin = System.currentTimeMillis();

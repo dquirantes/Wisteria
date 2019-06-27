@@ -64,6 +64,35 @@ public class Configuracion {
 
 	private String ficheroEstado;
 
+	private String ShellyEstado;
+	private String ShellyEnceder;
+	private String ShellyApagar;
+	
+	
+	public String getShellyEstado() {
+		return ShellyEstado;
+	}
+
+	public void setShellyEstado(String shellyEstado) {
+		ShellyEstado = shellyEstado;
+	}
+
+	public String getShellyEnceder() {
+		return ShellyEnceder;
+	}
+
+	public void setShellyEnceder(String shellyEnceder) {
+		ShellyEnceder = shellyEnceder;
+	}
+
+	public String getShellyApagar() {
+		return ShellyApagar;
+	}
+
+	public void setShellyApagar(String shellyApagar) {
+		ShellyApagar = shellyApagar;
+	}
+
 	public Configuracion(String pathProperties) {
 
 		try
@@ -125,6 +154,10 @@ public class Configuracion {
 			longitud_casa= Double.parseDouble(prop.getProperty("longitud_casa"));
 
 			ficheroEstado= prop.getProperty("ficheroEstado");
+			
+			ShellyEstado= prop.getProperty("ShellyEstado");
+			ShellyEnceder= prop.getProperty("ShellyEnceder");
+			ShellyApagar= prop.getProperty("ShellyApagar");
 
 
 
