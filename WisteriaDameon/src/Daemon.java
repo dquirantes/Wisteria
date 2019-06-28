@@ -42,10 +42,10 @@ public class Daemon {
 		log.info("Arrancando Wisteria Daemon David");
 
 
-		log.info ("script abrir: " + configuracion.getProgramaAbrir());
-		log.info ("script cerrar: " + configuracion.getProgramaCerrar());
+		log.info ("URL Shelley abrir: " + configuracion.getShellyEnceder());
+		log.info ("URL Shelley cerrar: " + configuracion.getShellyApagar());
 		log.info ("script temperatura: " + configuracion.getProgramaSensor());
-		log.info ("script notificaciones: " + configuracion.getProgramaNotificaciones());
+		log.info ("URL Telegram: " + configuracion.getUrlTelegram());
 		log.info ("script placa: " + configuracion.getProgramaPlaca());
 		log.info ("BBDD: " + configuracion.getBDName());		
 		log.info ("URL Tiempo: " + configuracion.getURLTiempo());
@@ -74,7 +74,7 @@ public class Daemon {
 		EnviarCorreo correo = new EnviarCorreo(configuracion.getCorrreoFrom(), configuracion.getCorrreoUsuario(), configuracion.getCorrreoPassword(), configuracion.getCorrreoHost(),configuracion.getCorrreoPuerto());
 
 
-		EnviarNotificaciones notificaciones = new EnviarNotificaciones (configuracion.getProgramaNotificaciones());
+		EnviarNotificaciones notificaciones = new EnviarNotificaciones (configuracion.getUrlTelegram());
 		notificaciones.enviar("Arrancando Sistema Domotico Wisteria");
 
 		/*NotificacionesInformacion notificaciones_info = new NotificacionesInformacion (notificaciones,sistema);
@@ -87,8 +87,8 @@ public class Daemon {
 		timer_xml.scheduleAtFixedRate(generarxml, 0, configuracion.getTestado()* 1000);
 
 
-		Servidor servidor = new Servidor(sistema, notificaciones,configuracion, basedatos);
-		servidor.start();
+		//Servidor servidor = new Servidor(sistema, notificaciones,configuracion, basedatos);
+		//servidor.start();
 
 
 		if (configuracion.getEnviarCorreo())
@@ -118,9 +118,10 @@ public class Daemon {
 		Timer timer_registro = new Timer(true);       
 		timer_registro.scheduleAtFixedRate(registro, configuracion.gettRegistro()*1000, configuracion.gettRegistro()* 1000);
 
-		RegistroWeb registro_web = new RegistroWeb (sistema, configuracion.getFicheroWeb());
+/*		RegistroWeb registro_web = new RegistroWeb (sistema, configuracion.getFicheroWeb());
 		Timer timer_registro_web = new Timer(true);       
 		timer_registro_web.scheduleAtFixedRate(registro_web, configuracion.gettRegistroWeb()*1000, configuracion.gettRegistroWeb()* 1000);
+		*/
 
 
 
@@ -235,13 +236,13 @@ public class Daemon {
 		timer_externa.cancel();
 		timer_actuador.cancel();		
 		timer_registro.cancel();
-		timer_registro_web.cancel();
+		//timer_registro_web.cancel();
 		//timer_notificaciones.cancel();
 		timer_xml.cancel();
 		timer_cambio_dia.cancel();
 
 		// Cierra el servidor
-		servidor.cerrar();
+		//servidor.cerrar();
 		long ms_fin = System.currentTimeMillis();
 
 		log.info ("Tiempo ejecucion: " + (ms_fin-ms_inicio)/1000 + " sg");

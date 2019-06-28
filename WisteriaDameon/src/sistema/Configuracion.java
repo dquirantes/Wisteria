@@ -11,10 +11,10 @@ public class Configuracion {
 
 	private static final Logger log = Logger.getLogger("Dameon");
 
-	private String programa_abrir;
-	private String programa_cerrar;
+//	private String programa_abrir;
+//	private String programa_cerrar;
 	private String programa_sensor;
-	private String programa_notificaciones;
+//	private String programa_notificaciones;
 	private String programa_placa;
 	private String url_tiempo;
 
@@ -49,18 +49,18 @@ public class Configuracion {
 	private long tExterno;
 	private long tBucle;
 	private long tRegistro;
-	private long tRegistroWeb;
+	//private long tRegistroWeb;
 	//private long tNotificaciones;
 	private long tEstado;
 
 	private float tmp_Margen;
 
-	private String fichero_web;
+	//private String fichero_web;
 
-	private int puerto_Web;
+	//private int puerto_Web;
 
-	private double latitud_casa;
-	private double longitud_casa;
+//	private double latitud_casa;
+//	private double longitud_casa;
 
 	private String ficheroEstado;
 
@@ -68,7 +68,16 @@ public class Configuracion {
 	private String ShellyEnceder;
 	private String ShellyApagar;
 	
+	private String urlTelegram;
 	
+	public String getUrlTelegram() {
+		return urlTelegram;
+	}
+
+	public void setUrlTelegram(String urlTelegram) {
+		this.urlTelegram = urlTelegram;
+	}
+
 	public String getShellyEstado() {
 		return ShellyEstado;
 	}
@@ -101,10 +110,10 @@ public class Configuracion {
 			prop.load(new FileInputStream(pathProperties));
 
 
-			programa_abrir = prop.getProperty("programa_abrir");	
-			programa_cerrar = prop.getProperty("programa_cerrar");
+			//programa_abrir = prop.getProperty("programa_abrir");	
+			//programa_cerrar = prop.getProperty("programa_cerrar");
 			programa_sensor = prop.getProperty("programa_sensor");
-			programa_notificaciones = prop.getProperty("programa_notificaciones");
+			//programa_notificaciones = prop.getProperty("programa_notificaciones");
 			programa_placa = prop.getProperty("programa_placa");
 
 
@@ -142,22 +151,24 @@ public class Configuracion {
 			tExterno= Long.parseLong(prop.getProperty("tExterno"));
 			tBucle= Long.parseLong(prop.getProperty("tBucle"));
 			tRegistro= Long.parseLong(prop.getProperty("tRegistro"));
-			tRegistroWeb= Long.parseLong(prop.getProperty("tRegistroWeb"));
+			//tRegistroWeb= Long.parseLong(prop.getProperty("tRegistroWeb"));
 			//tNotificaciones= Long.parseLong(prop.getProperty("tNotificaciones"));
 			tEstado= Long.parseLong(prop.getProperty("tEstado"));
 			
 
-			fichero_web = prop.getProperty("fichero_web");
-			puerto_Web= Integer.parseInt(prop.getProperty("puerto_Web"));
+			//fichero_web = prop.getProperty("fichero_web");
+			//puerto_Web= Integer.parseInt(prop.getProperty("puerto_Web"));
 
-			latitud_casa= Double.parseDouble(prop.getProperty("latitud_casa"));
-			longitud_casa= Double.parseDouble(prop.getProperty("longitud_casa"));
+			//latitud_casa= Double.parseDouble(prop.getProperty("latitud_casa"));
+			//longitud_casa= Double.parseDouble(prop.getProperty("longitud_casa"));
 
 			ficheroEstado= prop.getProperty("ficheroEstado");
 			
 			ShellyEstado= prop.getProperty("ShellyEstado");
 			ShellyEnceder= prop.getProperty("ShellyEnceder");
 			ShellyApagar= prop.getProperty("ShellyApagar");
+			
+			urlTelegram= prop.getProperty("urlTelegram");
 
 
 
@@ -210,11 +221,7 @@ public class Configuracion {
 		return tRegistro;
 	}
 
-	public long gettRegistroWeb()
-	{
-		return tRegistroWeb;
-	}
-
+	
 	public Float get_tempMaximaPlaca()
 	{
 		return tempMaximaPlaca;
@@ -241,10 +248,7 @@ public class Configuracion {
 	}
 
 
-	public String getProgramaNotificaciones()
-	{
-		return this.programa_notificaciones;
-	}
+
 
 	public String getCorrreoAsunto()
 	{
@@ -281,16 +285,7 @@ public class Configuracion {
 	{
 		return correo_host;
 	}
-
-	public String getProgramaAbrir()
-	{
-		return programa_abrir;
-	}
-
-	public String getProgramaCerrar()
-	{
-		return programa_cerrar;
-	}
+	
 
 	public String getProgramaSensor()
 	{
@@ -337,25 +332,7 @@ public class Configuracion {
 	{
 		return programa_placa;
 	}	
-
-	public String getFicheroWeb()
-	{
-		return fichero_web;
-	}
-	public int getPuerto()
-	{
-		return puerto_Web; 
-	}
-
-	public double getLontigudCasa()
-	{
-		return this.longitud_casa;
-	}
-
-	public double getLatitudCasa()
-	{
-		return this.latitud_casa;
-	}
+	
 
 	public String getFicheroEstado()
 	{

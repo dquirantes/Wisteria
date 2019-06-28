@@ -75,8 +75,8 @@ class Servidor extends Thread
 
 		try 
 		{
-			log.info("Arrancar servidor puerto: " + configuracion.getPuerto());
-			skServidor = new ServerSocket(configuracion.getPuerto());
+			log.info("Arrancar servidor puerto: " + 5000);
+			skServidor = new ServerSocket(5000);
 
 
 
