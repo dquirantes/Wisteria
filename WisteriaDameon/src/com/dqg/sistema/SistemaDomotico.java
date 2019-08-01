@@ -1,9 +1,14 @@
+package com.dqg.sistema;
 
-enum EstadoRele {ABIERTO, CERRADO};
-enum ModoSistema{ON_FIJO, OFF, CLIMATIZADOR};
-enum OpcionesModo{SALON, DORMITORIO,HABITACION1, HABITACION2,  MEDIA, MINIMO, MAXIMO};
+import com.dqg.tipos.*;
 
-enum ErroresSistema{BBDD, SENSORES,ACTUADOR, REGISTRO, TEMP_PLACA, SENSOR_PLACA, SHELLY};
+
+//enum EstadoRele {ABIERTO, CERRADO};
+//enum OpcionesModo{SALON, DORMITORIO,HABITACION1, HABITACION2,  MEDIA, MINIMO, MAXIMO};
+//enum ModoSistema{ON_FIJO, OFF, CLIMATIZADOR};
+
+
+//enum ErroresSistema{BBDD, SENSORES,ACTUADOR, REGISTRO, TEMP_PLACA, SENSOR_PLACA, SHELLY};
 
 
 public class SistemaDomotico {

@@ -1,4 +1,4 @@
-package sistema;
+package com.dqg.config;
 
 
 import java.io.FileInputStream;
@@ -37,10 +37,10 @@ public class Configuracion {
 	private String correo_asunto;
 
 
-	private String gpio_salon;
-	private String gpio_dormitorio;
-	private String gpio_habitacion1;
-	private String gpio_habitacion2;
+	private String sensorSalon;
+	private String sensorDormitorio;
+	private String sensorHabitacion1;
+	private String sensorHabitacion2;
 
 	private float tempMaximaPlaca;
 
@@ -69,7 +69,16 @@ public class Configuracion {
 	private String ShellyApagar;
 	
 	private String urlTelegram;
+	private String urlMosquito;
 	
+	public String getUrlMosquito() {
+		return urlMosquito;
+	}
+
+	public void setUrlMosquito(String urlMosquito) {
+		this.urlMosquito = urlMosquito;
+	}
+
 	public String getUrlTelegram() {
 		return urlTelegram;
 	}
@@ -137,10 +146,10 @@ public class Configuracion {
 			correo_asunto = prop.getProperty("correo_asunto");			
 
 
-			gpio_salon = prop.getProperty("gpio_salon");
-			gpio_dormitorio = prop.getProperty("gpio_dormitorio");
-			gpio_habitacion1 = prop.getProperty("gpio_habitacion1");
-			gpio_habitacion2 = prop.getProperty("gpio_habitacion2");
+			sensorSalon = prop.getProperty("sensorSalon");
+			sensorDormitorio = prop.getProperty("sensorDormitorio");
+			sensorHabitacion1 = prop.getProperty("sensorHabitacion1");
+			sensorHabitacion2 = prop.getProperty("sensorHabitacion2");
 
 			tempMaximaPlaca = Float.parseFloat(prop.getProperty("tempMaximaPlaca"));
 			tmp_Margen = Float.parseFloat(prop.getProperty("tmp_Margen"));
@@ -169,6 +178,8 @@ public class Configuracion {
 			ShellyApagar= prop.getProperty("ShellyApagar");
 			
 			urlTelegram= prop.getProperty("urlTelegram");
+			
+			urlMosquito= prop.getProperty("urlMosquito");
 
 
 
@@ -226,25 +237,25 @@ public class Configuracion {
 	{
 		return tempMaximaPlaca;
 	}
-	public String get_Gpio_Salon()
+	public String getSensorSalon()
 	{
-		return gpio_salon;
+		return sensorSalon;
 	}
 
-	public String get_Gpio_Dormitorio()
+	public String getSensorDormitorio()
 	{
-		return gpio_dormitorio;
+		return sensorDormitorio;
 	}
 
-	public String get_Gpio_habitacion1()
+	public String getSensorHabitacion1()
 	{
-		return gpio_habitacion1;
+		return sensorHabitacion1;
 	}
 
 
-	public String get_Gpio_habitacion2()
+	public String getSensorHabitacion2()
 	{
-		return gpio_habitacion2;
+		return sensorHabitacion2;
 	}
 
 

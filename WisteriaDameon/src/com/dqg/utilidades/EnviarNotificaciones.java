@@ -1,4 +1,4 @@
-package sistema;
+package com.dqg.utilidades;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -61,7 +61,7 @@ public class EnviarNotificaciones {
 				while ((responseLine = br.readLine()) != null) {
 					response.append(responseLine.trim());
 				}
-				System.out.println("******************** " + response.toString());
+				System.out.println(response.toString());
 
 			}
 		}catch(Exception e)

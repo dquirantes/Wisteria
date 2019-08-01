@@ -1,9 +1,13 @@
+package com.dqg.sistema;
 import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
 
-import sistema.BaseDatos;
-import sistema.Configuracion;
+import com.dqg.config.Configuracion;
+import com.dqg.sistema.datos.BaseDatos;
+import com.dqg.tipos.ErroresSistema;
+import com.dqg.tipos.ModoSistema;
+import com.dqg.tipos.OpcionesModo;
 
 
 

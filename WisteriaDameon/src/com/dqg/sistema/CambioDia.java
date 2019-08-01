@@ -1,8 +1,9 @@
+package com.dqg.sistema;
 import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
 
-import sistema.EnviarNotificaciones;
+import com.dqg.utilidades.EnviarNotificaciones;
 
 public class CambioDia  extends TimerTask {
 	

@@ -1,4 +1,8 @@
+package com.dqg.sistema;
 import org.apache.log4j.Logger;
+
+import com.dqg.tipos.EstadoRele;
+import com.dqg.tipos.ModoSistema;
 
 
 public class Calculador 

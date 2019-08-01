@@ -1,16 +1,18 @@
+package com.dqg.sistema;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.eclipse.paho.client.mqttv3.MqttClient;
 
-import sistema.BaseDatos;
-import sistema.Configuracion;
-import sistema.EnviarCorreo;
-import sistema.EnviarNotificaciones;
+import com.dqg.config.Configuracion;
+import com.dqg.sistema.datos.BaseDatos;
+import com.dqg.tipos.EstadoRele;
+import com.dqg.utilidades.EnviarCorreo;
+import com.dqg.utilidades.EnviarNotificaciones;
 
 
 
@@ -24,6 +26,9 @@ public class Daemon {
 
 	public static void main(String[] args) 
 	{
+
+
+
 
 		String path_aplicacion = System.getProperty("path_aplicacion");		
 		String path_configuracion =path_aplicacion + "/cfg/daemon.cfg"; 		
@@ -56,6 +61,26 @@ public class Daemon {
 		BaseDatos basedatos = new BaseDatos(configuracion);
 		Calculador calculador = new Calculador (sistema,configuracion.gettmp_Margen());
 
+
+		String dormitorio = configuracion.getSensorDormitorio();
+		String partes[] = dormitorio.split("@");
+
+		if (partes[0].equals("mqtt"))
+		{
+
+			log.debug("Sensor por mosquito.  Establecer función de callback");
+			try
+			{
+				MqttClient client=new MqttClient(configuracion.getUrlMosquito(), MqttClient.generateClientId());
+				client.setCallback( new MqttCallBack(sistema));
+				client.connect();
+				client.subscribe(partes[1]);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 
 
 		Rele rele = new Rele(configuracion,sistema);
@@ -118,10 +143,10 @@ public class Daemon {
 		Timer timer_registro = new Timer(true);       
 		timer_registro.scheduleAtFixedRate(registro, configuracion.gettRegistro()*1000, configuracion.gettRegistro()* 1000);
 
-/*		RegistroWeb registro_web = new RegistroWeb (sistema, configuracion.getFicheroWeb());
+		/*		RegistroWeb registro_web = new RegistroWeb (sistema, configuracion.getFicheroWeb());
 		Timer timer_registro_web = new Timer(true);       
 		timer_registro_web.scheduleAtFixedRate(registro_web, configuracion.gettRegistroWeb()*1000, configuracion.gettRegistroWeb()* 1000);
-		*/
+		 */
 
 
 

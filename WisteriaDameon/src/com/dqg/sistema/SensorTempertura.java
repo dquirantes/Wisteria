@@ -1,3 +1,4 @@
+package com.dqg.sistema;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -9,8 +10,10 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import sistema.Configuracion;
-import sistema.ProgramaExterno;
+import com.dqg.config.Configuracion;
+import com.dqg.sistema.datos.Medicion;
+import com.dqg.tipos.ErroresSistema;
+import com.dqg.utilidades.ProgramaExterno;
 
 
 
@@ -27,7 +30,7 @@ public class SensorTempertura extends TimerTask{
 
 
 	private int errores1 = 0;
-	private int errores2 = 0;
+	//private int errores2 = 0;
 	private int errores3 = 0;
 	private int errores4 = 0;
 	private int errores5 = 0;
@@ -80,7 +83,7 @@ public class SensorTempertura extends TimerTask{
 			//Cambio de timeout
 			con.setConnectTimeout(5000);
 			con.setReadTimeout(5000);
-			
+
 			BufferedReader in = new BufferedReader(
 					new InputStreamReader(con.getInputStream()));
 
@@ -88,7 +91,7 @@ public class SensorTempertura extends TimerTask{
 			String linea;
 			String []partes;
 
-			
+
 			if ((linea = in.readLine()) != null) 
 			{			
 				partes = linea.split(",");
@@ -109,19 +112,28 @@ public class SensorTempertura extends TimerTask{
 	private Medicion medicionTemperatura(String info)
 	{			
 
+		String partes[];
 
-		if (info.toLowerCase().startsWith("http"))			
+		if (info != null)
 		{
-			return medicionWeb(info);
-		}else if (info.equals(""))
-		{
-			// Posiblidad de no realizar la lectura
-			return null;
+			partes = info.split("@");
+
+			if (partes.length==2)
+			{
+
+				if (partes[0].toLowerCase().equals("web"))			
+				{
+					return medicionWeb(partes[1]);
+				}
+				else if (partes[0].toLowerCase().equals("gpio"))
+				{			
+					return medicionGPIO(partes[1]);
+				}				
+			}
 		}
-		else
-		{
-			return medicionGPIO(info);
-		}		
+		
+		return null;
+
 	}
 
 	@Override
@@ -135,12 +147,12 @@ public class SensorTempertura extends TimerTask{
 
 		float temp_placa;
 		String partes[];
-		
 
 
 
 
-		Medicion medicion = medicionTemperatura(config.get_Gpio_Salon());
+
+		Medicion medicion = medicionTemperatura(config.getSensorSalon());
 		// 09/02/2017 descarta las menores que cero
 		if (medicion!=null && medicion.temperatura>0)
 		{			
@@ -158,7 +170,7 @@ public class SensorTempertura extends TimerTask{
 		}
 
 
-		medicion = medicionTemperatura(config.get_Gpio_Dormitorio());
+		/*medicion = medicionTemperatura(config.getSensorDormitorio());
 		// 09/02/2017 descarta las menores que cero
 		if (medicion!=null  && medicion.temperatura>0)
 		{						
@@ -174,24 +186,24 @@ public class SensorTempertura extends TimerTask{
 
 			if (errores2>ERRORES_MAXIMOS)
 				sistema.setErrorSistema(ErroresSistema.SENSORES);
-		}
+		}*/
 
 
-		
-		medicion = medicionTemperatura(config.get_Gpio_habitacion1());
+
+		medicion = medicionTemperatura(config.getSensorHabitacion1());
 		// 09/02/2017 descarta las menores que cero
 		if (medicion!=null && medicion.temperatura>0)
 		{
 			sistema.setTemp_habitacion1(medicion.temperatura);
 			sistema.setHumedad_habitacion1(medicion.humedad);
 			errores3=0;
-		
+
 		}else			
 		{			
 			errores3++;
 			log.error("Fallo sensor habitación1 ESP8266");
 
- 
+
 			if (errores3>ERRORES_MAXIMOS)
 			{
 				sistema.setTemp_habitacion1(0f);
@@ -201,20 +213,20 @@ public class SensorTempertura extends TimerTask{
 		}
 
 
-		medicion = medicionTemperatura(config.get_Gpio_habitacion2());
+		medicion = medicionTemperatura(config.getSensorHabitacion2());
 		// 09/02/2017 descarta las menores que cero
 		if (medicion!=null && medicion.temperatura>0)
 		{
 			sistema.setTemp_habitacion2(medicion.temperatura);
 			sistema.setHumedad_habitacion2(medicion.humedad);
 			errores4=0;
-		
+
 		}else			
 		{			
 			errores4++;
 			log.error("Fallo sensor habitación2 ESP8266");
 
- 
+
 			if (errores4>ERRORES_MAXIMOS)
 			{
 				sistema.setTemp_habitacion2(0f);
@@ -223,7 +235,7 @@ public class SensorTempertura extends TimerTask{
 
 		}
 
-		
+
 
 		try
 		{
@@ -256,7 +268,7 @@ public class SensorTempertura extends TimerTask{
 				sistema.setErrorSistema(ErroresSistema.SENSOR_PLACA);
 
 		}
-		
+
 		// Medición Shelly
 		try {
 			URL urlShelly= new URL(config.getShellyEstado());
@@ -283,7 +295,7 @@ public class SensorTempertura extends TimerTask{
 				double temperature = jsonObject.getDouble("temperature");
 				log.debug("Temperatura Shelly: " + temperature);
 
-				
+
 				JSONArray relays = jsonObject.getJSONArray("relays");
 
 				if(relays.length() > 0)
@@ -292,7 +304,7 @@ public class SensorTempertura extends TimerTask{
 					Boolean ison = JSONObject_weather.getBoolean("ison");
 					log.debug("ISON Shelly: " + ison);
 				}
-							
+
 
 			} else {
 				log.error("Error in httpURLConnection.getResponseCode()!!!");
@@ -301,9 +313,10 @@ public class SensorTempertura extends TimerTask{
 		} catch (Exception e)
 		{
 			log.error ("Fallo Shelly " + e);
-			//e.printStackTrace();
 		}
 
 		log.debug("Sensor temperatura FIN");
 	}
+
+
 }

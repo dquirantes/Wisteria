@@ -1,4 +1,4 @@
-package sistema;
+package com.dqg.utilidades;
 import java.io.*; 
 
 import org.apache.log4j.Logger;

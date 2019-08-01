@@ -1,3 +1,4 @@
+package com.dqg.sistema.datos;
 
 public class Medicion 
 {

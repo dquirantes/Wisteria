@@ -1,11 +1,12 @@
+package com.dqg.sistema;
 import java.io.* ;
 import java.net.* ;
 
 import org.apache.log4j.Logger;
 
-import sistema.EnviarNotificaciones;
-import sistema.BaseDatos;
-import sistema.Configuracion;
+import com.dqg.config.Configuracion;
+import com.dqg.sistema.datos.BaseDatos;
+import com.dqg.utilidades.EnviarNotificaciones;
 
 
 class Servidor extends Thread  

@@ -1,3 +1,4 @@
+package com.dqg.sistema;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,7 +7,9 @@ import java.net.URL;
 
 import org.apache.log4j.Logger;
 
-import sistema.Configuracion;
+import com.dqg.config.Configuracion;
+import com.dqg.tipos.ErroresSistema;
+import com.dqg.tipos.EstadoRele;
 
 
 

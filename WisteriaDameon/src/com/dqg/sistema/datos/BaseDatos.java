@@ -1,4 +1,4 @@
-package sistema;
+package com.dqg.sistema.datos;
 
 
 import java.sql.Connection;
@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.apache.log4j.Logger;
+
+import com.dqg.config.Configuracion;
 
 
 

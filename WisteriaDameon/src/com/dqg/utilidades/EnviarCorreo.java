@@ -1,4 +1,4 @@
-package sistema;
+package com.dqg.utilidades;
 import java.util.Properties;
 
 import javax.mail.Message;
