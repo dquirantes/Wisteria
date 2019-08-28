@@ -7,6 +7,7 @@ import java.util.Timer;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import com.dqg.config.Configuracion;
 import com.dqg.sistema.datos.BaseDatos;
@@ -65,13 +66,16 @@ public class Daemon {
 		String dormitorio = configuracion.getSensorDormitorio();
 		String partes[] = dormitorio.split("@");
 
+		MqttClient client = null;
+		
+		
 		if (partes[0].equals("mqtt"))
 		{
 
 			log.debug("Sensor por mosquito.  Establecer función de callback");
 			try
 			{
-				MqttClient client=new MqttClient(configuracion.getUrlMosquito(), MqttClient.generateClientId());
+				client = new MqttClient(configuracion.getUrlMosquito(), MqttClient.generateClientId());
 				client.setCallback( new MqttCallBack(sistema));
 				client.connect();
 				client.subscribe(partes[1]);
@@ -85,7 +89,7 @@ public class Daemon {
 
 		Rele rele = new Rele(configuracion,sistema);
 
-
+		
 
 
 
@@ -268,6 +272,16 @@ public class Daemon {
 
 		// Cierra el servidor
 		//servidor.cerrar();
+		
+		// Cerrar MQTT 
+		try {			
+			client.disconnect();
+			log.debug ("Desconectado MQTT");
+			
+		} catch (MqttException e) {
+			e.printStackTrace();
+			log.error(e);
+		}
 		long ms_fin = System.currentTimeMillis();
 
 		log.info ("Tiempo ejecucion: " + (ms_fin-ms_inicio)/1000 + " sg");
