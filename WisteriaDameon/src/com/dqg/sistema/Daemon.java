@@ -67,8 +67,8 @@ public class Daemon {
 		String partes[] = dormitorio.split("@");
 
 		MqttClient client = null;
-		
-		
+
+
 		if (partes[0].equals("mqtt"))
 		{
 
@@ -79,17 +79,18 @@ public class Daemon {
 				client.setCallback( new MqttCallBack(sistema));
 				client.connect();
 				client.subscribe(partes[1]);
+				log.debug ("Conexión establecida mqtt.");
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace();
+				log.error("Fallo conexión mqttt " + e);
 			}
 		}
 
 
 		Rele rele = new Rele(configuracion,sistema);
 
-		
+
 
 
 
@@ -272,12 +273,12 @@ public class Daemon {
 
 		// Cierra el servidor
 		//servidor.cerrar();
-		
+
 		// Cerrar MQTT 
 		try {			
 			client.disconnect();
 			log.debug ("Desconectado MQTT");
-			
+
 		} catch (MqttException e) {
 			e.printStackTrace();
 			log.error(e);
