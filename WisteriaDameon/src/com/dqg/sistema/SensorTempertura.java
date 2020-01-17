@@ -31,8 +31,8 @@ public class SensorTempertura extends TimerTask{
 
 	private int errores1 = 0;
 	//private int errores2 = 0;
-	private int errores3 = 0;
-	private int errores4 = 0;
+	//private int errores3 = 0;
+	//private int errores4 = 0;
 	private int errores5 = 0;
 
 
@@ -131,7 +131,7 @@ public class SensorTempertura extends TimerTask{
 				}				
 			}
 		}
-		
+
 		return null;
 
 	}
@@ -190,7 +190,7 @@ public class SensorTempertura extends TimerTask{
 
 
 
-		medicion = medicionTemperatura(config.getSensorHabitacion1());
+		/*medicion = medicionTemperatura(config.getSensorHabitacion1());
 		// 09/02/2017 descarta las menores que cero
 		if (medicion!=null && medicion.temperatura>0)
 		{
@@ -236,7 +236,7 @@ public class SensorTempertura extends TimerTask{
 		}
 
 
-
+		 */
 		try
 		{
 			res= programa_externo.ejecutar(config.getProgramaPlaca());

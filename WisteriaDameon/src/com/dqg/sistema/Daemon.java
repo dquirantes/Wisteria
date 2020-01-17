@@ -64,21 +64,27 @@ public class Daemon {
 
 
 		String dormitorio = configuracion.getSensorDormitorio();
-		String partes[] = dormitorio.split("@");
+		String partes0[] = dormitorio.split("@");
 
+		String habitacion1 = configuracion.getSensorHabitacion1();
+		String partes1[] = habitacion1.split("@");
+		
+		String habitacion2 = configuracion.getSensorHabitacion2();
+		String partes2[] = habitacion2.split("@");
+		
 		MqttClient client = null;
 
 
-		if (partes[0].equals("mqtt"))
+		if (partes0[0].equals("mqtt"))
 		{
 
 			log.debug("Sensor por mosquito.  Establecer función de callback");
 			try
 			{
 				client = new MqttClient(configuracion.getUrlMosquito(), MqttClient.generateClientId());
-				client.setCallback( new MqttCallBack(sistema));
+				client.setCallback( new MqttCallBack(sistema, partes0[1],partes1[1], partes2[1]));
 				client.connect();
-				client.subscribe(partes[1]);
+				client.subscribe("shellies/#");
 				log.debug ("Conexión establecida mqtt.");
 			}
 			catch (Exception e)
